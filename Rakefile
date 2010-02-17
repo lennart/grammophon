@@ -27,7 +27,7 @@ end
 sprout 'flex4'
 
 project_model :model do |m|
-  m.project_name            = 'FlexPlayer'
+  m.project_name            = 'grammophon'
   m.language                = 'mxml'
   m.background_color        = '#FFFFFF'
   m.width                   = 970
@@ -53,7 +53,7 @@ debug :debug do |m|
 end
 
 deploy :grammophon do |m|
-  m.debug = true
+  m.prepended_args = "-keep-as3-metadata"
 end
 
 desc 'Compile run the test harness'

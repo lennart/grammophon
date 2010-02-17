@@ -9,6 +9,7 @@ class RlviewGenerator < Sprout::Generator::NamedBase  # :nodoc:
         m.directory full_class_dir
         m.template 'RLMediator.as', full_class_dir + '/' + class_name + 'Mediator.as'
         m.template 'Component.mxml', full_class_path.gsub(/\.as$/,".mxml")
+        m.template 'Event.as', full_class_dir + '/' + class_name + 'Event.as'
       end
  
       m.directory full_test_dir

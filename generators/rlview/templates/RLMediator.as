@@ -2,6 +2,7 @@ package <%= package_name %>
 {
 	
 	import <%= package_name %>.<%= class_name %>;
+  import <%= package_name %>.<%= class_name %>Event;
 	
 	import org.robotlegs.mvcs.Mediator;
 	
