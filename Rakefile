@@ -29,7 +29,7 @@ end
 sprout 'flex4'
 
 project_model :model do |m|
-  m.project_name            = 'grammophon'
+  m.project_name            = 'Grammophon'
   m.language                = 'mxml'
   m.background_color        = '#FFFFFF'
   m.width                   = 970
@@ -71,7 +71,7 @@ deploy :deploy
 
 desc "Debug the App"
 fdb :app => :model do |t|
-  t.file = "public/jukebox/grammophon-debug.swf"
+  t.file = "public/jukebox/Grammophon-debug.swf"
   t.run
   #t.break = 'SomeFile:23'
   #t.continue

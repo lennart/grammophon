@@ -8,7 +8,7 @@ package cc.varga.mvc
 	{
 		
 		[Inject]
-		public var view : Jukebox;
+		public var view : Grammophon;
 		
 
 		public function ApplicationMediator()

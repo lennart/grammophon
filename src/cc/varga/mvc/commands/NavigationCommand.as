@@ -16,7 +16,7 @@ package cc.varga.mvc.commands
 		
 		private var currentPos : Number = 0;
 		private var stateList : Array = ApplicationStateList.stateList;
-		private var mainView : Jukebox;
+		private var mainView : Grammophon;
 		
 		public function NavigationCommand()
 		{
@@ -25,7 +25,7 @@ package cc.varga.mvc.commands
 		
 		override public function execute():void{
 			
-			mainView = contextView as Jukebox;
+			mainView = contextView as Grammophon;
 			
 			switch(event.type){
 				case NavigationEvent.LEFT_CLICK :

@@ -24,14 +24,14 @@ package cc.varga.mvc.commands
 		public var stageService : StateChangerService;
 		
 		private var resultArray : ArrayCollection;
-		private var mainView : Jukebox;
+		private var mainView : Grammophon;
 		private var currentPos : uint = 0;
 		
 		public function DrawResultCommand(){ super(); }
 		
 		override public function execute() : void{
 		
-			mainView = contextView as Jukebox;
+			mainView = contextView as Grammophon;
 			
 			//mainView.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGE, onChange);
 //			mainView.addEventListener(StateChangeEvent.CURRENT_STATE_CHANGING, onChanging);

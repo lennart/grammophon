@@ -40,7 +40,7 @@ package cc.varga.mvc
 			mediatorMap.mapView(Navigation, NavigationMediator);
 			mediatorMap.mapView(Player, PlayerMediator);
 			mediatorMap.mapView(PlayerItem, PlayerItemMediator);
-			mediatorMap.mapView(Jukebox, ApplicationMediator);
+			mediatorMap.mapView(Grammophon, ApplicationMediator);
 			
 			//Injections
       var config : JukeboxAPIConfig = new JukeboxAPIConfig();
@@ -49,7 +49,7 @@ package cc.varga.mvc
 			injector.mapSingletonOf(IPlaylistService, PlaylistService);
       injector.mapValue(JukeboxAPIConfig, config);
 			injector.mapSingleton(StateChangerService);
-			injector.mapValue(Jukebox, contextView );
+			injector.mapValue(Grammophon, contextView );
       injector.mapSingletonOf(IPlayerService, DisorderStylePlayer);
 			injector.mapSingletonOf(ISearchService, PlaydarService);
 			injector.mapSingletonOf(ISoundService, PlaydarService);

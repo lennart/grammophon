@@ -16,7 +16,7 @@ package cc.varga.mvc.service
 	{
 		
 		[Inject]
-		public var contextView : Jukebox;
+		public var contextView : Grammophon;
 		
 		private var stateList : Array = ApplicationStateList.stateList;
 		private var currentPos : int;
