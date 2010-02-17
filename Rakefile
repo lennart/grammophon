@@ -71,7 +71,7 @@ deploy :deploy
 
 desc "Debug the App"
 fdb :app => :model do |t|
-  t.file = "public/jukebox/Jukebox-debug.swf"
+  t.file = "public/jukebox/grammophon-debug.swf"
   t.run
   #t.break = 'SomeFile:23'
   #t.continue
