@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/halo" 
+			   minWidth="1024" minHeight="768"
+			   creationComplete="application1_creationCompleteHandler(event)" 
+			   applicationComplete="application1_applicationCompleteHandler(event)"
+			   xmlns:mvc="cc.varga.mvc.*" 
+			   xmlns:search="cc.varga.mvc.views.search.*" 
+			   xmlns:views="cc.varga.mvc.views.*" 
+			   xmlns:player="cc.varga.mvc.views.player.*" 
+			   xmlns:navigation="cc.varga.mvc.views.navigation.*">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.Application;
+			import mx.events.FlexEvent;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+        //JukeboxAPI.HOST = "http://iris/";
+        //JukeboxAPI.HOST = "http://aludose/";
+			}			
+
+			protected function application1_applicationCompleteHandler(event:FlexEvent):void
+			{
+				//stage.displayState = StageDisplayState.FULL_SCREEN;
+			}
+
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				stage.displayState = StageDisplayState.FULL_SCREEN;
+			}
+
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<mvc:ApplicationContext contextView="{this}" />
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="searchState" />
+		<s:State name="resultState" />
+		<s:State name="playerState" />
+	</s:states>
+	
+	<s:Group id="searchSite" horizontalCenter="0" verticalCenter="0" includeIn="searchState">
+		<s:layout><s:VerticalLayout/></s:layout>
+		<s:Label text="Search" fontSize="24" />
+		<search:SearchSite height="100"/>
+	</s:Group>
+	
+	<s:Group id="resultContainer" left="250" right="180" top="100" bottom="100" includeIn="resultState" width="100%" height="100%">
+		<s:layout><s:HorizontalLayout/></s:layout>
+		<s:Label text="Search Result" fontSize="24" />
+		<s:Scroller width="100%" height="100%" left="50">
+			<views:ListContainer id="listContainer" left="50"/>
+		</s:Scroller>
+	</s:Group>
+
+	<s:Group id="playerGroup" left="180" right="180" width="150" includeIn="playerState">
+		<player:Player width="150" height="70" />
+	</s:Group>
+	
+	<navigation:Navigation id="navigation" width="100%" height="100%" />
+	
+</s:Application>

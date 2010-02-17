@@ -1,9 +1,14 @@
+tags
 bin
 *.swp
 *.swo
+vendor/*
 vendor/gems/*
-!vendor/gems/cache/
+vendor/gems/cache/*
 public/jukebox
-lib/robotlegs
-lib/swiftsuspenders
+lib
+!lib/oggvorbis.swc
 bin-release/*
+html-template/*
+flex-lib/*
+
