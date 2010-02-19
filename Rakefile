@@ -1,29 +1,3 @@
-require 'pp'
-require 'hpricot'
-ENV["AIRAKE_ROOT"] = File.dirname(__FILE__)
-ENV["AIRAKE_ENV"] = "development"
-require File.join(ENV["AIRAKE_ROOT"],"config","boot")
-
-begin
-  require 'jeweler'
-  Jeweler::Tasks.new do |gemspec|
-    gemspec.name = "grammophon"
-    gemspec.summary = "A Flex Frontend to KitNo"
-    gemspec.description = "A Flex Frontend to KitNo"
-    gemspec.email = "github@varga-net"
-    gemspec.homepage = "http://github.com/lennart/grammophon/"
-    gemspec.authors = ["Francis Varga", "Lennart Melzer"]
-    gemspec.add_dependency("sprout")
-    gemspec.add_dependency('rake')
-
-    files = FileList[%w{src/**/* test/* views/* lib/* script/* Gemfile}]
-    gemspec.files = files.to_a
-  end
-  Rake.application.jeweler.gemspec.executables = []
-rescue LoadError
-  puts "Jeweler not available. Install it with: gem install jeweler"
-end
-
 # Optionally load gems from a server other than rubyforge:
 # set_sources 'http://gems.projectsprouts.org'
 sprout 'flex4'
@@ -37,6 +11,7 @@ project_model :model do |m|
   m.compiler_gem_name     = 'sprout-flex4sdk-tool'
   m.compiler_gem_version  = '>= 4.0.0'
   m.source_path               << 'lib/as3playdar/src'
+  m.source_path               << 'lib/yajl/as3/src'
   m.lib_dir               = 'lib'
   m.swc_dir               = 'lib'
   m.bin_dir               = 'public/jukebox'
