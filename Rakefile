@@ -77,6 +77,23 @@ fdb :app => :model do |t|
   #t.continue
 end
 
+namespace :ext do
+  desc "Do something with extensions"
+  task :compile do |t|
+    Dir.chdir("lib/yajl") do
+      `rake lib`
+      ENV["TO"] = File.join(File.expand_path(File.dirname(__FILE__)),"lib")
+      `rake install`
+    end
+  end
+
+  desc "Do something with extensions"
+  task :clean do |t|
+    Dir.chdir("lib/yajl") do
+      `rake clean`
+    end
+  end
+end
 
 desc 'Create documentation'
 document :doc

@@ -6,7 +6,7 @@ vendor/*
 vendor/gems/*
 vendor/gems/cache/*
 public/jukebox
-lib
+!lib
 !lib/oggvorbis.swc
 bin-release/*
 html-template/*
