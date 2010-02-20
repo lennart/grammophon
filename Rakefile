@@ -1,3 +1,4 @@
+require 'config/boot'
 # Optionally load gems from a server other than rubyforge:
 # set_sources 'http://gems.projectsprouts.org'
 sprout 'flex4'
@@ -15,7 +16,7 @@ project_model :model do |m|
   m.lib_dir               = 'lib'
   m.swc_dir               = 'lib'
   m.bin_dir               = 'public/jukebox'
-if ENV["FCSH"] 
+unless ENV["NOFCSH"] 
   m.use_fcsh = true
 end
   # m.test_dir              = 'test'
@@ -56,9 +57,9 @@ namespace :ext do
   desc "Do something with extensions"
   task :compile do |t|
     Dir.chdir("lib/yajl") do
-      `rake lib`
+      puts `rake lib`
       ENV["TO"] = File.join(File.expand_path(File.dirname(__FILE__)),"lib")
-      `rake install`
+      puts `rake install`
     end
   end
 

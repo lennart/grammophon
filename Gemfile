@@ -1,5 +1,5 @@
-gem "jeweler"
-gem "sinatra"
+#gem "jeweler"
+#gem "sinatra"
 gem "sprout"
 #gem "rake"
 #gem "emk-sinatra-url-for", :require_as => "sinatra/url_for" 

@@ -49,7 +49,7 @@ package cc.varga.mvc
 			injector.mapSingletonOf(IPlaylistService, PlaylistService);
       injector.mapValue(JukeboxAPIConfig, config);
 			injector.mapSingleton(StateChangerService);
-			injector.mapValue(Grammophon, contextView );
+			injector.mapValue(Grammophon, contextView);
       injector.mapSingletonOf(IPlayerService, DisorderStylePlayer);
 			injector.mapSingletonOf(ISearchService, PlaydarService);
 			injector.mapSingletonOf(ISoundService, PlaydarService);

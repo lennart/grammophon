@@ -4,6 +4,7 @@ package cc.varga.utils
 
 	public class Logger
 	{
+    public static var verbose : Boolean = false;
 		public function Logger()
 		{
 		}
@@ -11,6 +12,12 @@ package cc.varga.utils
 		public static function log(message : String, classpath:String):void{
 			trace("["+getTimer()+"]["+classpath+"] --> " + message);
 		}
+
+    public static function debug(message : *, classpath:String = "DEBUG") : void {
+      if(verbose) {
+      log(message, classpath);
+      }
+    }
 		
 	}
 }

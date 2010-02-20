@@ -66,12 +66,14 @@ package cc.varga.mvc.views.search
       var blips:Array = vo.data as Array;
       resolvedBlips = [];
       leftToResolve = blips.length;
+      Logger.log("Left to resolve: "+leftToResolve, this.toString());
 
       for(var i:uint = 0; i < blips.length; i++) {
         var blip:Object = blips[i];
         if((blip.artist == "") || (blip.artist == null)) {
           blip.artist = blip.title
         }
+        Logger.log("resolve: "+blip.title, this.toString());
         playdar.resolve(blip.artist,blip.title,onResolvedBlip,onUnresolvedBlip);
       }
     }
