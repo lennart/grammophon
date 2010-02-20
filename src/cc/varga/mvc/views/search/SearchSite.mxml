@@ -5,7 +5,8 @@
 
 	<fx:Script>
 		<![CDATA[
-			
+			import cmodule.yajl.CLibInit;
+      
       protected function searchHandler(event:MouseEvent):void
       {
         if (searchText.text.length != 0) {
@@ -32,8 +33,10 @@
     ]]>
   </fx:Script>
 
+      <s:layout><s:VerticalLayout/></s:layout>
   <s:Group width="60%" height="80">
     <s:layout><s:HorizontalLayout/></s:layout>
+
     <s:TextInput id="searchText" fontSize="28" width="400" textAlign="center" height="100%" />
     <s:Button label="Search" fontSize="16" click="searchHandler(event)" height="100%" width="150" />
     <s:Button id="load_blipfm" label="Load Blip.fm Feed" fontSize="16" click="load_blipfm_clickHandler(event)" width="150" height="100%"  />
