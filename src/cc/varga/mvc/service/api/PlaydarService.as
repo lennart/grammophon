@@ -20,7 +20,7 @@ package cc.varga.mvc.service.api {
     private var _onError : Function;
     public function PlaydarService() {
       playdar = new Playdar();
-        playdar.addEventListener(Event.COMPLETE,onSongComplete);
+       // playdar.addEventListener(Event.COMPLETE,onSongComplete);
       super();
     }
 
@@ -31,7 +31,7 @@ package cc.varga.mvc.service.api {
     public function play(uid : String, onComplete : Function, onError : Function) : void {
       _onComplete = onComplete;
       _onError = onError;
-      playdar.play(uid);
+      playdar.play(uid, onSongComplete, onError);
       _currentlyPlaying = uid;
     }
 
@@ -47,12 +47,12 @@ package cc.varga.mvc.service.api {
     }
 
     private function onError(event : Event) : void {
-      trace("Something failed: "+event.toString());
+      Logger.log("Something failed: "+event.toString(),"PlaydarService");
+      if (_onError != null) {
+        _onError();
+      }
     }
 
-
-    public function playOGG(uid : String) : void {
-    }
   }
 		
 }

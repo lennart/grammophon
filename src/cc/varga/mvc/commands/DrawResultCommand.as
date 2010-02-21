@@ -13,6 +13,7 @@ package cc.varga.mvc.commands
   import spark.components.Label;
   import mx.collections.ArrayCollection;
   import cc.varga.utils.Logger;
+  import cc.varga.mvc.ApplicationData;
 	
 	public class DrawResultCommand extends Command
 	{
@@ -22,6 +23,9 @@ package cc.varga.mvc.commands
 
     [Inject]
 		public var stageService : StateChangerService;
+
+    [Inject]
+    public var appData : ApplicationData;
 		
 		private var resultArray : ArrayCollection;
 		private var mainView : Grammophon;
@@ -47,7 +51,8 @@ package cc.varga.mvc.commands
 		private function drawResults(invocationEvent: * = null):void{
       Logger.log("passing Results on","Draw Result Command");
       var item : ResultItem = new ResultItem();
-      item.dg.dataProvider = new ArrayCollection(event.result);
+      item.dg.dataProvider = appData.results.getItemAt(appData.results.length-1);
+//      item.dg.dataProvider = 
       mainView.listContainer.removeAllElements();
       mainView.listContainer.addElement( item );
       

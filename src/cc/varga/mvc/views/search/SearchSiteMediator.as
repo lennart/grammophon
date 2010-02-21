@@ -6,9 +6,12 @@ package cc.varga.mvc.views.search
   import cc.varga.api.jukebox.JukeboxAPIConfig;
   import cc.varga.api.jukebox.services.JukeboxService;
   import cc.varga.mvc.service.ISearchService;
+  import cc.varga.mvc.ApplicationData;
   import cc.varga.utils.Logger
 
-    import mx.controls.Alert;
+  import mx.collections.ArrayCollection;
+
+  import mx.controls.Alert;
 
   import org.robotlegs.mvcs.Mediator;
 
@@ -23,10 +26,14 @@ package cc.varga.mvc.views.search
     [Inject]
       public var config : JukeboxAPIConfig;
 
+    [Inject]
+      public var appData : ApplicationData;
+
     private var searchService : IRESTful; 
     private var blipService : IRESTful; 
     private var leftToResolve : uint;
-    private var resolvedBlips : Array;
+    [Bindable]
+    private var resolvedBlips : ArrayCollection;
 
     public function SearchSiteMediator()
     {
@@ -64,7 +71,8 @@ package cc.varga.mvc.views.search
     private function resolveResults(vo : JukeboxAPIVO) : void {
       Logger.log("Resolving Blips",this.toString());
       var blips:Array = vo.data as Array;
-      resolvedBlips = [];
+      resolvedBlips = new ArrayCollection();
+      appData.results.addItem(resolvedBlips);
       leftToResolve = blips.length;
       Logger.log("Left to resolve: "+leftToResolve, this.toString());
 
@@ -76,15 +84,17 @@ package cc.varga.mvc.views.search
         Logger.log("resolve: "+blip.title, this.toString());
         playdar.resolve(blip.artist,blip.title,onResolvedBlip,onUnresolvedBlip);
       }
+
+        var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
+        searchEvent.result = resolvedBlips;
+        dispatch(searchEvent);
     }
 
     private function onUnresolvedBlip(response : Object) : void {
       leftToResolve -= 1;
       if(leftToResolve == 0) {
-        var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
-        searchEvent.result = resolvedBlips;
-        dispatch(searchEvent);
 
+        Logger.log("Resolving complete",this.toString());
       }
       else {
         Logger.log("Unresolved Blip "+leftToResolve+" left to go",this.toString());
@@ -93,11 +103,12 @@ package cc.varga.mvc.views.search
 
     private function onResolvedBlip(response : Object) : void {
       leftToResolve -= 1;
-      resolvedBlips.push(response.results[0]);
+      resolvedBlips.addItem(response.results[0]);
       if(leftToResolve == 0) {
-        var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
-        searchEvent.result = resolvedBlips;
-        dispatch(searchEvent);
+        Logger.log("Resolving complete",this.toString());
+       // var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
+       // searchEvent.result = resolvedBlips;
+       // dispatch(searchEvent);
 
       }
       else {

@@ -6,6 +6,8 @@ package cc.varga.mvc.service
 	import flash.media.SoundChannel;
 	import org.robotlegs.mvcs.*;
 	
+
+  import cc.varga.utils.Logger;
 	import cc.varga.mvc.service.*;
 	
 	public class DisorderStylePlayer extends Actor implements IPlayerService
@@ -53,11 +55,16 @@ package cc.varga.mvc.service
 
     public function play(id : String) : void { 
       if(hasCallback) {
-        playdar.play(id, _beforeNext, function() : void { trace("U FAILED"); });
+        playdar.play(id, _beforeNext, onFailure);
       }
       else {
         trace("AARG");
       }
+    }
+
+    private function onFailure(e : *) : void {
+      Logger.debug("Decide what to do when playing fails, in this case we just skip to the next");
+      _beforeNext();
     }
 
     public function get state() : String {

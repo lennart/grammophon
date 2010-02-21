@@ -81,8 +81,8 @@ package cc.varga.mvc.views.player
 		}
 		
 		private function drawPlaylist():void{
-			
-			view.playlist.removeAllElements();
+			view.dg.dataProvider = playlist.all;
+			/*view.playlist.removeAllElements();
 			
 			for(var i:uint=0; i < playlist.all.length; i++){
 				
@@ -91,7 +91,7 @@ package cc.varga.mvc.views.player
 				item.position = i;
 				view.playlist.addElement(item);
 				
-			}
+			}*/
 			
 		}
 		
