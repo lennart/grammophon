@@ -1,5 +1,6 @@
 package cc.varga.mvc
 {
+  import flash.system.Security;
 	import cc.varga.mvc.commands.*;
 	import cc.varga.mvc.service.*;
 	import cc.varga.mvc.service.playlist.*;
@@ -34,7 +35,7 @@ package cc.varga.mvc
 			commandMap.mapEvent(NavigationEvent.RIGHT_CLICK, NavigationCommand, NavigationEvent);
 			commandMap.mapEvent(PlaylistEvent.PLAYLIST_ADD, AddToPlaylistCommand, PlaylistEvent);
 			
-      System.security.allowDomain("http://localhost"); 
+      Security.allowDomain("http://localhost"); 
      // System.security.allowDomain("http://localhost"); 
 			//Views
 			mediatorMap.mapView(SearchSite, SearchSiteMediator);

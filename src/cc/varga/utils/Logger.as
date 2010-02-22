@@ -4,7 +4,7 @@ package cc.varga.utils
 
 	public class Logger
 	{
-    public static var verbose : Boolean = true;
+    public static var verbose : Boolean = false;
 		public function Logger()
 		{
 		}
