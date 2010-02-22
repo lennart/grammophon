@@ -1,5 +1,6 @@
 tags
 bin
+bin-debug
 *.swp
 *.swo
 vendor/*
