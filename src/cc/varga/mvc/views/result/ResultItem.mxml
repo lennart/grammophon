@@ -14,7 +14,7 @@
 			import cc.varga.mvc.service.playlist.*;
 			import cc.varga.mvc.views.player.*;
       import mx.collections.ArrayCollection;
-			
+		  import spark.events.IndexChangeEvent;	
 			
       public var position : uint;
 
@@ -38,11 +38,12 @@
       }
 
 
-			protected function btn_download_clickHandler(event:MouseEvent):void
-			{
-				
-			}
-
+      protected function choseResults(event : IndexChangeEvent) : void {
+      trace("Switching Result Set");
+      var itemEvent : ResultItemEvent = new ResultItemEvent(ResultItemEvent.SWITCH_TO_RESULTS);
+      itemEvent.label = ButtonBar(event.target).selectedItem;
+      dispatchEvent(itemEvent);
+      }
 		]]>
 	</fx:Script>
 
@@ -50,6 +51,7 @@
     <s:State name="playdar"/>
     <s:State name="tunejuggler"/>
   </s:states>
+  <s:ButtonBar id="resultsChooser" change="choseResults(event)" requireSelection="true"/>  
   <mx:DataGrid id="dg" width="75%" height="80%" itemClick="addToPlaylist(dg.selectedItem);">
     <mx:columns>
       <mx:DataGridColumn headerText="Artist" dataField="artist"/>

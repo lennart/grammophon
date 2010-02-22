@@ -25,8 +25,8 @@
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	
-	<s:Button left="0" top="0" bottom="0" width="150" id="leftButton" click="leftButton_clickHandler(event)" />
-	<s:Button right="0" top="0" bottom="0" width="150" id="rightButton" click="rightButton_clickHandler(event)"/>
+	<s:Button left="0" top="0" bottom="0" width="150" id="leftButton" click="leftButton_clickHandler(event)" alpha="0.3" />
+	<s:Button right="0" top="0" bottom="0" width="150" id="rightButton" click="rightButton_clickHandler(event)" alpha="0.3"/>
 	
 	
 </s:Group>

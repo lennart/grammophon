@@ -12,11 +12,12 @@ package cc.varga.mvc.views.search
 		public static const DRAW_RESULT : String = "draw_result";
 		public static const POLL_COLLECTION : String = "poll_collection";
 		
-		public var search_query : String;
+		public var search_query : Object;
 		public var blipFM_Nick : String;
 		public var jsonObj:Object;
 		public var remotePlaylistURL : String;
 		public var result : *;
+    public var resultSetLabel : String;
 		
 		public function SearchSiteEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{

@@ -5,21 +5,38 @@
 
 	<fx:Script>
 		<![CDATA[
-			import cmodule.yajl.CLibInit;
+      import cmodule.yajl.CLibInit;
+      import mx.controls.Alert;
+      import spark.events.IndexChangeEvent;
       
       protected function searchHandler(event:MouseEvent):void
       {
-        if (searchText.text.length != 0) {
+        if ((title.text.length != 0) || (artist.text.length != 0)) {
                 var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.SEARCH_CLICKED);
-                searchEvent.search_query = searchText.text;
+                var query : Object = {};
+                if(title.text != "") {
+                  query.title = title.text;
+                }
+                if(artist.text != "") {
+                  query.artist = artist.text;
+                }
+
+                searchEvent.search_query = query;
                 dispatchEvent(searchEvent);
-        } else { searchText.text = 'U Failed'; }
+        }
+        else { 
+          Alert.show("No Search Term given");
+        }
+      }
+
+      protected function toggleState(event : IndexChangeEvent) : void {
+        this.currentState = ButtonBar(event.target).selectedItem; 
       }
 
       protected function load_blipfm_clickHandler(event:MouseEvent):void
       {
         var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.LOAD_BLIP_FM_FEED);
-        searchEvent.blipFM_Nick = searchText.text;
+        searchEvent.blipFM_Nick = nickname.text;
         dispatchEvent(searchEvent);
       }
 
@@ -32,15 +49,26 @@
 
     ]]>
   </fx:Script>
-
-      <s:layout><s:VerticalLayout/></s:layout>
+  <s:states>
+    <s:State name="search"/>
+    <s:State name="blipfm"/>
+  </s:states>
+  <s:layout><s:VerticalLayout/></s:layout>
+  <s:ButtonBar id="modeBar" requireSelection="true" change="toggleState(event)" width="100%">
+    <s:dataProvider>
+      <s:ArrayList source="{this.states.map(function(x:*, idx:int, arr:Array) : String { return x.name; })}"/>
+    </s:dataProvider>
+  </s:ButtonBar>
   <s:Group width="60%" height="80">
     <s:layout><s:HorizontalLayout/></s:layout>
-
-    <s:TextInput id="searchText" fontSize="28" width="400" textAlign="center" height="100%" />
-    <s:Button label="Search" fontSize="16" click="searchHandler(event)" height="100%" width="150" />
-    <s:Button id="load_blipfm" label="Load Blip.fm Feed" fontSize="16" click="load_blipfm_clickHandler(event)" width="150" height="100%"  />
-    <s:Button id="pollCollection" label="Poll Collection" fontSize="16" click="pollCollection_clickHandler(event)" width="150" height="100%" />
+    <s:Label text.search="Artist"
+             text.blipfm="Nickname"/>
+    <s:TextInput id="artist" fontSize="24" width="250" textAlign="center" includeIn="search" />
+    <s:Label text="Title" includeIn="search"/>
+    <s:TextInput id="title" fontSize="24" width="250" textAlign="center" includeIn="search" />
+    <s:TextInput id="nickname" fontSize="28" width="250" textAlign="center" includeIn="blipfm"/>
+    <s:Button label.search="Search" fontSize="16" click.search="searchHandler(event)" width="150"
+        label.blipfm="get blip feed" click.blipfm="load_blipfm_clickHandler(event)"/>
   </s:Group>
 
 </s:Group>

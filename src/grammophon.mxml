@@ -9,6 +9,7 @@
 			   xmlns:search="cc.varga.mvc.views.search.*" 
 			   xmlns:views="cc.varga.mvc.views.*" 
 			   xmlns:player="cc.varga.mvc.views.player.*" 
+         xmlns:result="cc.varga.mvc.views.result.*"
 			   xmlns:navigation="cc.varga.mvc.views.navigation.*">
 	
 	<fx:Script>
@@ -54,10 +55,10 @@
 	<s:Group id="resultContainer" includeIn="resultState" left="50" top="25" right="50" bottom="50">
 		<s:layout><s:VerticalLayout/></s:layout>
 		<s:Label text="Search Result" fontSize="24" />
-		<views:ListContainer id="listContainer"/>
+    <result:ResultItem id="results"/>
 	</s:Group>
 
-	<s:Group id="playerGroup" left="180" right="180" includeIn="playerState">
+	<s:Group id="playerGroup" left="180" right="180" top="10" bottom="20" includeIn="playerState">
 		<player:Player width="100%" height="100%" />
 	</s:Group>
 	

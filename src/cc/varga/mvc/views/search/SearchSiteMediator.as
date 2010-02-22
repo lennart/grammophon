@@ -32,8 +32,7 @@ package cc.varga.mvc.views.search
     private var searchService : IRESTful; 
     private var blipService : IRESTful; 
     private var leftToResolve : uint;
-    [Bindable]
-    private var resolvedBlips : ArrayCollection;
+    private var resultContainer : Object = new Object();
 
     public function SearchSiteMediator()
     {
@@ -41,26 +40,12 @@ package cc.varga.mvc.views.search
     }
 
     override public function onRegister() : void{
-
-      //			service.addEventListener(JukeboxAPIEvent.SEARCH_RESULT, drawResult);
-      //			service.addEventListener(JukeboxAPIEvent.BLIP_FEED_RESULT, drawResult);			
-      //			service.addEventListener(JukeboxAPIEvent.DOWNLAD_COMPLETE, onDownloadComplete);
-
       eventMap.mapListener(view, SearchSiteEvent.SEARCH_CLICKED, onSearchClicked);
       eventMap.mapListener(view, SearchSiteEvent.LOAD_BLIP_FM_FEED, onLoadBlipFmFeed);
-
     }
 
     private function onFaultService(vo: JukeboxAPIVO):void{
       Alert.show("OnFaultService: " + vo);
-    }
-
-    private function onDownloadComplete(event:JukeboxAPIEvent):void{
-      Logger.log(event.toString(),this.toString());
-    }
-
-    private function onDownloadSong(event : SearchSiteEvent):void{
-      //service.download({doc: JSON.encode(event.jsonObj)});
     }
 
     private function onLoadBlipFmFeed(event : SearchSiteEvent):void{
@@ -69,24 +54,24 @@ package cc.varga.mvc.views.search
     }
 
     private function resolveResults(vo : JukeboxAPIVO) : void {
-      Logger.log("Resolving Blips",this.toString());
+      Logger.debug("Resolving Blips",this.toString());
       var blips:Array = vo.data as Array;
-      resolvedBlips = new ArrayCollection();
-      appData.results.addItem(resolvedBlips);
+      var label : String = vo.path[0];
+      resultContainer[label] = appData.createNewResultContainer(label);
       leftToResolve = blips.length;
-      Logger.log("Left to resolve: "+leftToResolve, this.toString());
+      Logger.debug("Left to resolve: "+leftToResolve, this.toString());
 
       for(var i:uint = 0; i < blips.length; i++) {
         var blip:Object = blips[i];
         if((blip.artist == "") || (blip.artist == null)) {
           blip.artist = blip.title
         }
-        Logger.log("resolve: "+blip.title, this.toString());
-        playdar.resolve(blip.artist,blip.title,onResolvedBlip,onUnresolvedBlip);
+        Logger.debug("resolve: "+blip.title, this.toString());
+        playdar.resolve(blip.artist,blip.title,function(response: Object) : void { onResolvedBlip(label, response); },onUnresolvedBlip);
       }
 
         var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
-        searchEvent.result = resolvedBlips;
+        searchEvent.resultSetLabel = label;
         dispatch(searchEvent);
     }
 
@@ -94,22 +79,18 @@ package cc.varga.mvc.views.search
       leftToResolve -= 1;
       if(leftToResolve == 0) {
 
-        Logger.log("Resolving complete",this.toString());
+        Logger.debug("Resolving complete",this.toString());
       }
       else {
-        Logger.log("Unresolved Blip "+leftToResolve+" left to go",this.toString());
+        Logger.debug("Unresolved Blip "+leftToResolve+" left to go",this.toString());
       }
     }
 
-    private function onResolvedBlip(response : Object) : void {
+    private function onResolvedBlip(label : String, response : Object) : void {
       leftToResolve -= 1;
-      resolvedBlips.addItem(response.results[0]);
+      resultContainer[label].addItem(response.results[0]);
       if(leftToResolve == 0) {
         Logger.log("Resolving complete",this.toString());
-       // var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
-       // searchEvent.result = resolvedBlips;
-       // dispatch(searchEvent);
-
       }
       else {
         Logger.log("Resolved Blip "+leftToResolve+" left to go",this.toString());
@@ -120,21 +101,21 @@ package cc.varga.mvc.views.search
 
       Logger.log(event.toString(),this.toString());
       // Setting both artist and track to search_query
-      var artist:String = event.search_query;
-      var track:String = event.search_query;
-      playdar.resolve(artist, track, onSearchResults, onError); 
+      var artist:String = event.search_query.artist;
+      var track:String = event.search_query.title;
+      var label : String = artist+" "+track;
+      playdar.resolve(artist, track, function(response:Object):void{ onSearchResults(label, response); }, onError); 
 
       Logger.log("Fetching Search Results",this.toString());
-
-      /* var searchVO:JukeboxAPIVO = new JukeboxAPIVO({type: JukeboxAPIVO.SEARCH_TYPE, data: {query: event.search_query, limit: 20}});
-         createAndRegisterService(searchVO,onFaultService,drawResult).post();*/
+      resultContainer[label] = appData.createNewResultContainer(label);
+      var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
+      searchEvent.resultSetLabel = label;
+      dispatch(searchEvent);
     }
 
-    private function onSearchResults(response:Object) : void {
-      Logger.log("Search Results coming in",this.toString());
-      var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
-      searchEvent.result = response.results;
-      dispatch(searchEvent);
+    private function onSearchResults(label : String, response:Object) : void {
+      Logger.log("Search Results coming in: "+response.results.length,this.toString());
+      resultContainer[label].addAll(new ArrayCollection(response.results));
     }
 
     private function createAndRegisterService(vo: JukeboxAPIVO, fault: Function, complete: Function) : IRESTful {

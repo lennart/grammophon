@@ -50,11 +50,9 @@ package cc.varga.mvc.commands
 		
 		private function drawResults(invocationEvent: * = null):void{
       Logger.log("passing Results on","Draw Result Command");
-      var item : ResultItem = new ResultItem();
-      item.dg.dataProvider = appData.results.getItemAt(appData.results.length-1);
-//      item.dg.dataProvider = 
-      mainView.listContainer.removeAllElements();
-      mainView.listContainer.addElement( item );
+      var current : Object = appData.results.getItemAt(appData.results.length-1);
+      mainView.results.resultsChooser.selectedItem = current.label
+      mainView.results.dg.dataProvider = current.content;
       
 		//	if(resultArray.length > 0){	
 		//

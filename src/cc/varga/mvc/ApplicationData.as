@@ -4,7 +4,14 @@ package cc.varga.mvc {
 
   public class ApplicationData extends Actor {
     
+    [Bindable]
     public var results : ArrayCollection = new ArrayCollection();
+
+    public function createNewResultContainer(label : String) : ArrayCollection {
+      var container : ArrayCollection = new ArrayCollection();
+      results.addItem({"label": label, "content": container});
+      return container;
+    }
 
     
   }
