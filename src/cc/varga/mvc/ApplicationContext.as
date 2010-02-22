@@ -34,6 +34,8 @@ package cc.varga.mvc
 			commandMap.mapEvent(NavigationEvent.RIGHT_CLICK, NavigationCommand, NavigationEvent);
 			commandMap.mapEvent(PlaylistEvent.PLAYLIST_ADD, AddToPlaylistCommand, PlaylistEvent);
 			
+      System.security.allowDomain("http://localhost"); 
+     // System.security.allowDomain("http://localhost"); 
 			//Views
 			mediatorMap.mapView(SearchSite, SearchSiteMediator);
 			mediatorMap.mapView(ResultItem, ResultItemMediator);
