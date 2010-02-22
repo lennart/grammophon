@@ -1,6 +1,3 @@
 [submodule "lib/as3playdar"]
 	path = lib/as3playdar
 	url = git://github.com/imlucas/as3playdar.git
-[submodule "lib/yajl"]
-	path = lib/yajl
-	url = git://github.com/lennart/yajl

@@ -79,7 +79,7 @@ package cc.varga.mvc.views.search
       leftToResolve -= 1;
       if(leftToResolve == 0) {
 
-        Logger.debug("Resolving complete",this.toString());
+        Logger.log("Resolving complete",this.toString());
       }
       else {
         Logger.debug("Unresolved Blip "+leftToResolve+" left to go",this.toString());
@@ -93,7 +93,7 @@ package cc.varga.mvc.views.search
         Logger.log("Resolving complete",this.toString());
       }
       else {
-        Logger.log("Resolved Blip "+leftToResolve+" left to go",this.toString());
+        Logger.debug("Resolved Blip "+leftToResolve+" left to go",this.toString());
       }
     }
 

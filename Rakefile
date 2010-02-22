@@ -10,7 +10,6 @@ project_model :model do |m|
   m.compiler_gem_name     = 'sprout-flex4sdk-tool'
   m.compiler_gem_version  = '>= 4.0.0'
   m.source_path               << 'lib/as3playdar/src'
-  m.source_path               << 'lib/yajl/as3/src'
   m.lib_dir               = 'lib'
   m.swc_dir               = 'lib'
   m.bin_dir               = 'public/jukebox'
@@ -21,8 +20,8 @@ end
   # m.doc_dir               = 'doc'
   # m.asset_dir             = 'assets'
   
-  m.library_path.concat         FileList["#{m.lib_dir.to_s}/*.swc"].to_a
-  m.libraries.concat [:robotlegs, :swiftsuspenders, :corelib, :"jukeboxapi-src",:"as3httpclient-src"]
+  m.library_path.concat         FileList["#{m.lib_dir.to_s}/**/*.swc"].to_a
+  m.libraries.concat [:robotlegs, :swiftsuspenders, :corelib, :"jukeboxapi-src",:"as3httpclient-src", :yajl]
 end
 
 
@@ -49,8 +48,6 @@ desc "Debug the App"
 fdb :app => :model do |t|
   t.file = "public/jukebox/Grammophon-debug.swf"
   t.run
-  #t.break = 'SomeFile:23'
-  #t.continue
 end
 
 namespace :ext do
@@ -59,6 +56,7 @@ namespace :ext do
     Dir.chdir("lib/yajl") do
       puts `rake lib`
       ENV["TO"] = File.join(File.expand_path(File.dirname(__FILE__)),"lib")
+      ENV["QUIET"] = "yes"
       puts `rake install`
     end
   end
