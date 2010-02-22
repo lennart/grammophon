@@ -41,7 +41,9 @@ desc 'Compile run the test harness'
 unit :test
 
 desc 'Compile the optimized deployment'
-deploy :deploy
+deploy :deploy => :model do |m|
+  m.prepended_args = "-keep-as3-metadata"
+end
 
 desc "Debug the App"
 fdb :app => :model do |t|
