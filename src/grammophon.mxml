@@ -1,67 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
-			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/halo" 
-			   minWidth="1024" minHeight="768"
-			   creationComplete="application1_creationCompleteHandler(event)" 
-			   applicationComplete="application1_applicationCompleteHandler(event)"
-			   xmlns:mvc="cc.varga.mvc.*" 
-			   xmlns:search="cc.varga.mvc.views.search.*" 
-			   xmlns:views="cc.varga.mvc.views.*" 
-			   xmlns:player="cc.varga.mvc.views.player.*" 
-         xmlns:result="cc.varga.mvc.views.result.*"
-			   xmlns:navigation="cc.varga.mvc.views.navigation.*">
-	
-	<fx:Script>
-		<![CDATA[
-			import mx.core.Application;
-			import mx.events.FlexEvent;
-			
-			protected function application1_creationCompleteHandler(event:FlexEvent):void
-			{
-        //JukeboxAPI.HOST = "http://iris/";
-        //JukeboxAPI.HOST = "http://aludose/";
-			}			
+    xmlns:s="library://ns.adobe.com/flex/spark" 
+    xmlns:mx="library://ns.adobe.com/flex/halo" 
+    minWidth="1024" minHeight="768"
+    creationComplete="application1_creationCompleteHandler(event)" 
+    applicationComplete="application1_applicationCompleteHandler(event)"
+    xmlns:mvc="cc.varga.mvc.*" 
+    xmlns:search="cc.varga.mvc.views.search.*" 
+    xmlns:views="cc.varga.mvc.views.*" 
+    xmlns:player="cc.varga.mvc.views.player.*" 
+    xmlns:result="cc.varga.mvc.views.result.*"
+    xmlns:navigation="cc.varga.mvc.views.navigation.*">
 
-			protected function application1_applicationCompleteHandler(event:FlexEvent):void
-			{
-				//stage.displayState = StageDisplayState.FULL_SCREEN;
-			}
+  <fx:Script>
+    <![CDATA[
+      import mx.core.Application;
+      import mx.events.FlexEvent;
 
-			protected function button1_clickHandler(event:MouseEvent):void
-			{
-				stage.displayState = StageDisplayState.FULL_SCREEN;
-			}
+      protected function application1_creationCompleteHandler(event:FlexEvent):void
+      {
+      }			
 
-		]]>
-	</fx:Script>
-	
-	<fx:Declarations>
-		<mvc:ApplicationContext contextView="{this}" />
-	</fx:Declarations>
-	
-	<s:states>
-		<s:State name="searchState" />
-		<s:State name="resultState" />
-		<s:State name="playerState" />
-	</s:states>
-	
-	<s:Group id="searchSite" horizontalCenter="0" verticalCenter="0" includeIn="searchState">
-		<s:layout><s:VerticalLayout/></s:layout>
-		<s:Label text="Search" fontSize="24" />
-		<search:SearchSite height="100"/>
-	</s:Group>
-	
-	<s:Group id="resultContainer" includeIn="resultState" left="50" top="25" right="50" bottom="50">
-		<s:layout><s:VerticalLayout/></s:layout>
-		<s:Label text="Search Result" fontSize="24" />
-    <result:ResultItem id="results"/>
-	</s:Group>
+      protected function application1_applicationCompleteHandler(event:FlexEvent):void
+      {
+        //stage.displayState = StageDisplayState.FULL_SCREEN;
+      }
 
-	<s:Group id="playerGroup" left="180" right="180" top="10" bottom="20" includeIn="playerState">
-		<player:Player width="100%" height="100%" />
-	</s:Group>
-	
-	<navigation:Navigation id="navigation" width="100%" height="100%" />
-	
+      protected function button1_clickHandler(event:MouseEvent):void
+      {
+        stage.displayState = StageDisplayState.FULL_SCREEN;
+      }
+
+    ]]>
+  </fx:Script>
+
+  <fx:Declarations>
+    <mvc:ApplicationContext contextView="{this}" />
+  </fx:Declarations>
+
+  <s:states>
+    <s:State name="searchState" />
+    <s:State name="resultState" />
+    <s:State name="playerState" />
+  </s:states>
+  <s:layout>
+    <s:VerticalLayout horizontalAlign="center" />
+  </s:layout>
+
+  <navigation:Navigator width="100%" height="100"
+      skinClass="cc.varga.mvc.views.navigation.NavigationSkin" 
+      id="navigator"
+      label.searchState="Search" 
+      label.resultState="Results"
+      label.playerState="Playback"/>
+
+  <s:Group width="100%" height="100%">
+    <s:SkinnableContainer 
+        id="searchSite" 
+        includeIn="searchState" 
+        horizontalCenter="0"
+        verticalCenter="-100"
+        skinClass="cc.varga.mvc.views.search.SearchSkin">
+      <search:SearchSite />
+    </s:SkinnableContainer>
+
+    <s:Group id="resultContainer"
+        includeIn="resultState"
+        left="50" 
+        top="25" 
+        right="50" 
+        bottom="50">
+      <s:layout><s:VerticalLayout/></s:layout>
+      <result:ResultItem id="results"/>
+    </s:Group>
+
+    <s:Group
+        id="playerGroup"
+        left="180"
+        right="180" 
+        top="10" 
+        bottom="20"
+        includeIn="playerState">
+      <player:Player width="100%" height="100%" />
+    </s:Group>
+
+  </s:Group>
 </s:Application>

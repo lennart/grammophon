@@ -7,7 +7,7 @@ package cc.varga.mvc.views.navigation
 	{
 		
 		[Inject]
-		public var view : Navigation;
+		public var view : Navigator;
 		
 		private var stateList : Array;
 		private var currentStatePos : uint;

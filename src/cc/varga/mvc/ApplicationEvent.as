@@ -6,6 +6,7 @@ package cc.varga.mvc
 	{
 		
 		public static const SWITCH_TO_PLAYER : String = "switch_to_player";
+    public static const SWITCH_RIGHT : String = "switch_right";
 		
 		public var stage:String;
 		

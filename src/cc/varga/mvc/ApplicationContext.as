@@ -1,6 +1,7 @@
 package cc.varga.mvc
 {
   import flash.system.Security;
+  import flash.events.KeyboardEvent;
 	import cc.varga.mvc.commands.*;
 	import cc.varga.mvc.service.*;
 	import cc.varga.mvc.service.playlist.*;
@@ -34,16 +35,18 @@ package cc.varga.mvc
 			commandMap.mapEvent(NavigationEvent.LEFT_CLICK, NavigationCommand, NavigationEvent);
 			commandMap.mapEvent(NavigationEvent.RIGHT_CLICK, NavigationCommand, NavigationEvent);
 			commandMap.mapEvent(PlaylistEvent.PLAYLIST_ADD, AddToPlaylistCommand, PlaylistEvent);
+      commandMap.mapEvent(KeyboardEvent.KEY_UP, KeyboardControlCommand, KeyboardEvent);
 			
-      Security.allowDomain("http://localhost"); 
+   //   Security.allowDomain("http://localhost"); 
      // System.security.allowDomain("http://localhost"); 
 			//Views
 			mediatorMap.mapView(SearchSite, SearchSiteMediator);
 			mediatorMap.mapView(ResultItem, ResultItemMediator);
-			mediatorMap.mapView(Navigation, NavigationMediator);
+			mediatorMap.mapView(Navigator, NavigationMediator);
 			mediatorMap.mapView(Player, PlayerMediator);
 			mediatorMap.mapView(PlayerItem, PlayerItemMediator);
 			mediatorMap.mapView(Grammophon, ApplicationMediator);
+      mediatorMap.createMediator(contextView);
 			
 			//Injections
       var config : JukeboxAPIConfig = new JukeboxAPIConfig();

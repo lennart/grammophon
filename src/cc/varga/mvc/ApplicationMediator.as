@@ -1,6 +1,8 @@
 package cc.varga.mvc
 {
 	import flash.events.KeyboardEvent;
+  import flash.ui.Keyboard;
+  import cc.varga.utils.Logger;
 	
 	import org.robotlegs.mvcs.Mediator;
 	
@@ -17,10 +19,14 @@ package cc.varga.mvc
 		}
 		
 		override public function onRegister():void{	
+      Logger.debug("Keyboard Event Mapping","ApplicationMediator");
+   //   Logger.debug(view.);
+      eventMap.mapListener(view, KeyboardEvent.KEY_UP, onKeyUp); 
 		}
 		
-		private function onKeyDown(event : KeyboardEvent):void{
-			
+		private function onKeyUp(event : KeyboardEvent):void{
+      Logger.debug("Keyboard Event KEY_UP","ApplicationMediator");
+      dispatch(event);
 		}
 		
 	}
