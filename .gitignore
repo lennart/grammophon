@@ -3,13 +3,4 @@ bin
 bin-debug
 *.swp
 *.swo
-vendor/*
-vendor/gems/*
-vendor/gems/cache/*
-public/jukebox
-!lib
-!lib/oggvorbis.swc
-bin-release/*
-html-template/*
-flex-lib/*
 
