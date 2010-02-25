@@ -26,17 +26,18 @@ package cc.varga.mvc.commands
 		  Logger.debug("Incoming Keyboard Event");	
 			mainView = contextView as Grammophon;
 			
-			switch(event.keyCode){
-				case Keyboard.LEFT :
-          dispatch(new NavigationEvent(NavigationEvent.LEFT_CLICK));
-					break;
-				case Keyboard.RIGHT:
-          dispatch(new NavigationEvent(NavigationEvent.RIGHT_CLICK));
-					break;
-				default :
-					break;
-			}
-			
+      if(event.ctrlKey) {
+        switch(event.keyCode){
+          case Keyboard.LEFT :
+            dispatch(new NavigationEvent(NavigationEvent.LEFT_CLICK));
+            break;
+          case Keyboard.RIGHT:
+            dispatch(new NavigationEvent(NavigationEvent.RIGHT_CLICK));
+            break;
+          default :
+            break;
+        }
+      }
 		}
 		
 	}

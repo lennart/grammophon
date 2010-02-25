@@ -7,7 +7,9 @@ package cc.varga.mvc.views.search
   import cc.varga.api.jukebox.services.JukeboxService;
   import cc.varga.mvc.service.ISearchService;
   import cc.varga.mvc.ApplicationData;
-  import cc.varga.utils.Logger
+  import cc.varga.utils.Logger;
+  import flash.events.KeyboardEvent;
+  import flash.ui.Keyboard;
 
   import mx.collections.ArrayCollection;
 
@@ -47,6 +49,7 @@ package cc.varga.mvc.views.search
     private function onFaultService(vo: JukeboxAPIVO):void{
       Alert.show("OnFaultService: " + vo);
     }
+
 
     private function onLoadBlipFmFeed(event : SearchSiteEvent):void{
       var vo:JukeboxAPIVO = new JukeboxAPIVO(config, {type: JukeboxAPIVO.BLIP_TYPE, path: [event.blipFM_Nick], format: ""});

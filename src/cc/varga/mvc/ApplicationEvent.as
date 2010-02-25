@@ -4,10 +4,6 @@ package cc.varga.mvc
 	
 	public class ApplicationEvent extends Event
 	{
-		
-		public static const SWITCH_TO_PLAYER : String = "switch_to_player";
-    public static const SWITCH_RIGHT : String = "switch_right";
-		
 		public var stage:String;
 		
 		public function ApplicationEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)

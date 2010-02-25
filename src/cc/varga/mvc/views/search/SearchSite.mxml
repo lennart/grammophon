@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/halo">
+     xmlns:mx="library://ns.adobe.com/flex/halo"
+     xmlns:mcintosh="com.andymcintosh.controls.*">
 
 	<fx:Script>
 		<![CDATA[
@@ -49,6 +50,14 @@
 
     ]]>
   </fx:Script>
+  <fx:Declarations>
+    	<s:Transition fromState="search" toState="blipfm" >
+    		<s:Fade duration="350" target="{nickname}" />
+    	</s:Transition> 
+    	<s:Transition fromState="blipfm" toState="search" >
+    		<s:Fade duration="350" target="{nickname}" />
+    	</s:Transition> 
+  </fx:Declarations>
   <s:states>
     <s:State name="search"/>
     <s:State name="blipfm"/>
@@ -59,15 +68,19 @@
       <s:ArrayList source="{this.states.map(function(x:*, idx:int, arr:Array) : String { return x.name; })}"/>
     </s:dataProvider>
   </s:ButtonBar>
-  <s:Group width="60%" height="80">
+  <s:Group width="60%" height="80" id="container">
     <s:layout><s:HorizontalLayout/></s:layout>
-    <s:Label text.search="Artist"
-             text.blipfm="Nickname"/>
-    <s:TextInput id="artist" fontSize="24" width="250" textAlign="center" includeIn="search" />
-    <s:Label text="Title" includeIn="search"/>
-    <s:TextInput id="title" fontSize="24" width="250" textAlign="center" includeIn="search" />
-    <s:TextInput id="nickname" fontSize="28" width="250" textAlign="center" includeIn="blipfm"/>
-    <s:Button label.search="Search" fontSize="16" click.search="searchHandler(event)" width="150"
+    <mcintosh:AdvancedTextInput id="artist" 
+        skinClass="com.andymcintosh.skins.AdvancedTextInputSkin"
+             fontSize="24"
+             width="250"
+             promptText="Artist"
+             textAlign="center" 
+             includeIn="search" />
+    <mcintosh:AdvancedTextInput id="title"  skinClass="com.andymcintosh.skins.AdvancedTextInputSkin" promptText="Title" fontSize="24" width="250" textAlign="center" includeIn="search" />
+    <mcintosh:AdvancedTextInput id="nickname" promptText="Nickname" skinClass="com.andymcintosh.skins.AdvancedTextInputSkin" fontSize="28" width="250" textAlign="center" includeIn="blipfm"/>
+    <s:Button label.search="Search" 
+        fontSize.search="24" fontSize.blipfm="28" click.search="searchHandler(event)" width="150"
         label.blipfm="get blip feed" click.blipfm="load_blipfm_clickHandler(event)"/>
   </s:Group>
 
