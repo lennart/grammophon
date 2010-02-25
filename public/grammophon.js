@@ -11,7 +11,7 @@ attributes.id = "Grammophon";  attributes.name = "Grammophon";
 attributes.align = "middle";
 swfobject.embedSWF(  
   "public/jukebox/Grammophon.swf", "flashContent",
-  "100%", "100%",
+  "100%", "550px",
   swfVersionStr, xiSwfUrlStr,
   flashvars, params, attributes);
 /* First, set the client up with some callbacks. */
