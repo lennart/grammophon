@@ -15,6 +15,7 @@ swfobject.embedSWF(
   swfVersionStr, xiSwfUrlStr,
   flashvars, params, attributes);
 /* First, set the client up with some callbacks. */
+Playdar.auth_details.type = "flash";
 Playdar.setupClient({
 
     // Called when the browser is authorised to query Playdar.
