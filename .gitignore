@@ -1,3 +1,7 @@
+log
+logs
+nginx.conf
+mime.types
 tags
 bin
 bin-debug
