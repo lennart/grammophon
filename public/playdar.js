@@ -29,7 +29,7 @@ Playdar = {
     player: null,
     auth_details: {
         name: window.document.title,
-        website: window.location.hostname
+        website: window.location.protocol + '//' + window.location.host + '/'
     },
     nop: function () {},
     setupClient: function (listeners) {
