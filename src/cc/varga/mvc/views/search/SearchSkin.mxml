@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
     xmlns:s="library://ns.adobe.com/flex/spark" 
-    xmlns:mx="library://ns.adobe.com/flex/halo" width="100%" height="100%" creationComplete="myEffect">
+    xmlns:mx="library://ns.adobe.com/flex/halo" width="100%" height="100%">
   <s:states>
     <s:State name="normal"/>
   </s:states>
@@ -10,15 +10,6 @@
     [HostComponent("spark.components.Group")]
   </fx:Metadata>
   <fx:Declarations>
-    <mx:Iris id="irisIn" duration="200" />
-
-    <s:Sequence id="myEffect" duration="500">
-      <s:Parallel>
-        <s:Scale />
-        <s:Fade />
-      </s:Parallel>
-    </s:Sequence>
-
   </fx:Declarations>
   <s:Rect width="100%" height="100%" radiusX="5" radiusY="5">
     <s:fill>

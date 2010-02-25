@@ -17,7 +17,6 @@ package cc.varga.mvc
 	import cc.varga.mvc.service.ISoundService;
 	import flash.display.DisplayObjectContainer;
   import cc.varga.mvc.service.DisorderStylePlayer;
-  import cc.varga.api.jukebox.JukeboxAPIConfig;
 	
 	import org.robotlegs.mvcs.Context;
 
@@ -30,16 +29,12 @@ package cc.varga.mvc
 		
 		override public function startup() : void{
 				
-			//Commands
 			commandMap.mapEvent(SearchSiteEvent.DRAW_RESULT, DrawResultCommand, SearchSiteEvent);
 			commandMap.mapEvent(NavigationEvent.LEFT_CLICK, NavigationCommand, NavigationEvent);
 			commandMap.mapEvent(NavigationEvent.RIGHT_CLICK, NavigationCommand, NavigationEvent);
 			commandMap.mapEvent(PlaylistEvent.PLAYLIST_ADD, AddToPlaylistCommand, PlaylistEvent);
       commandMap.mapEvent(KeyboardEvent.KEY_UP, KeyboardControlCommand, KeyboardEvent);
 			
-   //   Security.allowDomain("http://localhost"); 
-     // System.security.allowDomain("http://localhost"); 
-			//Views
 			mediatorMap.mapView(SearchSite, SearchSiteMediator);
 			mediatorMap.mapView(ResultItem, ResultItemMediator);
 			mediatorMap.mapView(Navigator, NavigationMediator);
@@ -48,12 +43,7 @@ package cc.varga.mvc
 			mediatorMap.mapView(Grammophon, ApplicationMediator);
       mediatorMap.createMediator(contextView);
 			
-			//Injections
-      var config : JukeboxAPIConfig = new JukeboxAPIConfig();
-      config.loadConfig();
-
 			injector.mapSingletonOf(IPlaylistService, PlaylistService);
-      injector.mapValue(JukeboxAPIConfig, config);
 			injector.mapSingleton(StateChangerService);
       injector.mapSingleton(ApplicationData);
 			injector.mapValue(Grammophon, contextView);
