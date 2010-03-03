@@ -33,7 +33,7 @@ package cc.varga.mvc
 			commandMap.mapEvent(NavigationEvent.LEFT_CLICK, NavigationCommand, NavigationEvent);
 			commandMap.mapEvent(NavigationEvent.RIGHT_CLICK, NavigationCommand, NavigationEvent);
 			commandMap.mapEvent(PlaylistEvent.PLAYLIST_ADD, AddToPlaylistCommand, PlaylistEvent);
-      commandMap.mapEvent(KeyboardEvent.KEY_UP, KeyboardControlCommand, KeyboardEvent);
+      commandMap.mapEvent(KeyboardEvent.KEY_DOWN, KeyboardControlCommand, KeyboardEvent);
 			
 			mediatorMap.mapView(SearchSite, SearchSiteMediator);
 			mediatorMap.mapView(ResultItem, ResultItemMediator);

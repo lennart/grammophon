@@ -9,7 +9,7 @@
       import mx.controls.Alert;
       import spark.events.IndexChangeEvent;
       
-      protected function searchHandler(event:MouseEvent):void
+      protected function searchHandler(event : *):void
       {
         if ((title.text.length != 0) || (artist.text.length != 0)) {
                 var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.SEARCH_CLICKED);
@@ -29,6 +29,20 @@
         }
       }
 
+      protected function blipHandler(event : *) : void {
+          if (nickname.text.length != 0) {
+                var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.FETCH_BLIPS);
+                var query : Object = {};
+                  query.nickname = nickname.text;
+
+                searchEvent.search_query = query;
+                dispatchEvent(searchEvent);
+        }
+        else { 
+          Alert.show("No Nickname given");
+        }
+      }
+
       protected function toggleState(event : IndexChangeEvent) : void {
         this.currentState = ButtonBar(event.target).selectedItem; 
       }
@@ -39,6 +53,7 @@
   </fx:Declarations>
   <s:states>
     <s:State name="search"/>
+    <s:State name="blipfm"/>
   </s:states>
   <s:layout><s:VerticalLayout/></s:layout>
   <s:ButtonBar id="modeBar" requireSelection="true" change="toggleState(event)" width="100%">
@@ -50,14 +65,24 @@
     <s:layout><s:HorizontalLayout/></s:layout>
     <mcintosh:AdvancedTextInput id="artist" 
         skinClass="com.andymcintosh.skins.AdvancedTextInputSkin"
-             fontSize="24"
-             width="250"
-             promptText="Artist"
-             textAlign="center" 
-             includeIn="search" />
-    <mcintosh:AdvancedTextInput id="title"  skinClass="com.andymcintosh.skins.AdvancedTextInputSkin" promptText="Title" fontSize="24" width="250" textAlign="center" includeIn="search" />
-    <s:Button label.search="Search" 
-        fontSize.search="24" click.search="searchHandler(event)" width="150" />
+        fontSize="24"
+        width="250"
+        promptText="Artist"
+        enter="searchHandler(event)"
+        textAlign="center" 
+        includeIn="search" />
+    <mcintosh:AdvancedTextInput id="title"
+        skinClass="com.andymcintosh.skins.AdvancedTextInputSkin" 
+        enter="searchHandler(event)"
+        promptText="Title" fontSize="24" width="250" textAlign="center" includeIn="search" />
+    <mcintosh:AdvancedTextInput id="nickname"  
+        skinClass="com.andymcintosh.skins.AdvancedTextInputSkin" 
+        enter="blipHandler(event)"
+        promptText="Nickname" fontSize="24" width="250" textAlign="center" includeIn="blipfm" />
+    <s:Button label.search="Search" label.blipfm="Get Blips"
+        fontSize.search="24"
+        click.blipfm="blipHandler(event)"
+        click.search="searchHandler(event)" width="150" />
   </s:Group>
 
 </s:Group>

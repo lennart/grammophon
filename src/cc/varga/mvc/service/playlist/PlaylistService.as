@@ -1,6 +1,7 @@
 package cc.varga.mvc.service.playlist
 {
 	import cc.varga.mvc.service.IPlaylistService;
+	import cc.varga.utils.Logger;
 	
 	import flash.utils.Dictionary;
 	
@@ -64,6 +65,7 @@ package cc.varga.mvc.service.playlist
 		}
 		
 		public function get prev() : Object{
+      Logger.debug("Fetching previous Song\nCurrent Position: "+currentPos);
       if(currentPos > 1) {
         currentPos -= 1;
         return playlist.getItemAt(currentPos);
@@ -74,6 +76,7 @@ package cc.varga.mvc.service.playlist
 		}
 		
 		public function get next() : Object{
+      Logger.debug("Fetching next Song\nCurrent Position: "+currentPos);
       if(currentPos < playlist.length) {
         return playlist.getItemAt(currentPos++);
       }

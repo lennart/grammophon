@@ -21,10 +21,10 @@ package cc.varga.mvc
 		
 		override public function onRegister():void{	
       Logger.debug("Keyboard Event Mapping","ApplicationMediator");
-      eventMap.mapListener(view.stage, KeyboardEvent.KEY_UP, onKeyUp); 
+      eventMap.mapListener(view.stage, KeyboardEvent.KEY_DOWN, onKeyDown); 
     }
 
-    private function onKeyUp(event : KeyboardEvent):void{
+    private function onKeyDown(event : KeyboardEvent):void{
       Logger.debug("Keyboard Event KEY_UP","ApplicationMediator");
       dispatch(event);
     }

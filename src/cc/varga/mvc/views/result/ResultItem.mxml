@@ -56,6 +56,14 @@
     <mx:columns>
       <mx:DataGridColumn headerText="Artist" dataField="artist"/>
       <mx:DataGridColumn headerText="Track" dataField="track"/>
+      <mx:DataGridColumn headerText="Source" dataField="source"/>
     </mx:columns>
   </mx:DataGrid>
+  <s:Group width="75%">
+    <s:layout>
+      <s:HorizontalLayout />
+    </s:layout>
+    <s:Label text="{dg.dataProvider.length}"/><s:Label text="/"/><s:Label id="maxSize" />
+
+  </s:Group>
 </s:Group>

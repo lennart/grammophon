@@ -32,6 +32,7 @@ package cc.varga.mvc.views.result
 			eventMap.mapListener(view, PlaylistEvent.PLAYLIST_ADD, onAddToPlaylist);   
 			eventMap.mapListener(view, ResultItemEvent.PLAY_ITEM, onPlay);
 			eventMap.mapListener(view, ResultItemEvent.SWITCH_TO_RESULTS, onSwitchToResults);
+			eventMap.mapListener(eventDispatcher, ResultItemEvent.SWITCH_TO_RESULTS, onSwitchToResults);
       eventMap.mapListener(eventDispatcher, ResultItemEvent.DRAW_RESULTS, drawResults);
       view.resultsChooser.dataProvider = new ArrayCollection((appData.results.source as Array).map(function(e:*,i:int,a:Array):String { return e.label }));
 		}
@@ -46,8 +47,14 @@ package cc.varga.mvc.views.result
       var label: String = event.label;
       var matches : Array = appData.results.source.filter(function(e:*, i:int, a:Array): Boolean { return e.label == label });
       if(matches.length > 0) {
-        Logger.debug("Result set contains "+matches[0]+" Items");
-        view.dg.dataProvider = matches[0].content;
+        var currentResultSet : Object = matches[0];
+        view.dg.dataProvider = currentResultSet.content;
+        if(currentResultSet.maxSize != 0) {
+          view.maxSize.text = currentResultSet.maxSize;
+        }
+        else {
+          view.maxSize.text = "";
+        }
       }
       else {
         Logger.log("This should not happen, can't switch to results: "+label,"Results Mediator");

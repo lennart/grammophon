@@ -42,39 +42,41 @@ package cc.varga.mvc.views.player
 		}
 		
 		private function onPause(event:PlayerEvent):void{
-      disorder.state = "stalled";
+      Logger.debug("Pause Event");
+      disorder.zap();
 		}
 		
 		private function onNext(event:PlayerEvent):void{
-      onSongComplete();
+      disorder.disable(true);
+      feedPlayer(playlist.next);
+      disorder.enable();
 		}
 
     private function onPrev(event:PlayerEvent) :void {
-      var prev : Object = playlist.prev;
-      if(prev != null) {
-        disorder.play(prev.sid);
-      }
-      else {
-        disorder.state = "stalled";
-      }
+      disorder.disable(true);
+      feedPlayer(playlist.prev);
+      disorder.enable();
     }
 
 		private function onSongComplete(): void{
-      var next : Object = playlist.next;
-      if(next != null) {
-        disorder.play(next.sid);
+      feedPlayer(playlist.next);
+		}
+
+    private function feedPlayer(song : Object) : void {
+      if(song != null) {
+        disorder.songId = song.sid;
       }
       else {
-        disorder.state = "stalled";
+        disorder.disable();
       }
-		}
+    }
 		
 		private function onPlayItem(event : PlayerEvent):void{
 			Logger.log("PlayItem Event", "");
 		}
 		
 		private function onPlayPlaylist(event : PlayerEvent):void{
-      disorder.state = "continuous";
+      disorder.enable();
 		}
 		
 		private function onPlayMP3(event:PlayerEvent) : void {

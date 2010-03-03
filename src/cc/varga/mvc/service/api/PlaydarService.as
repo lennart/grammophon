@@ -20,7 +20,6 @@ package cc.varga.mvc.service.api {
     private var _onError : Function;
     public function PlaydarService() {
       playdar = new Playdar();
-       // playdar.addEventListener(Event.COMPLETE,onSongComplete);
       super();
     }
 
@@ -35,8 +34,19 @@ package cc.varga.mvc.service.api {
       _currentlyPlaying = uid;
     }
 
+    public function resume() : void {
+      Logger.debug("Resume called for: "+_currentlyPlaying);
+      playdar.resume(_currentlyPlaying);
+    }
+
     public function stop() : void {
+      Logger.debug("Stop called for: "+_currentlyPlaying);
       playdar.stop(_currentlyPlaying);
+    }
+    
+    public function pause() : void {
+      Logger.debug("Pause called for: "+_currentlyPlaying);
+      playdar.pause(_currentlyPlaying);
     }
 
     private function onSongComplete(event : Event) : void {

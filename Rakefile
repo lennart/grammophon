@@ -10,6 +10,7 @@ end
 project_model :model do |m|
   m.project_name            = 'Grammophon'
   m.language                = 'mxml'
+  m.default_size          = "800 480"
   m.background_color        = '#FFFFFF'
   m.compiler_gem_name     = 'sprout-flex4sdk-tool'
   m.compiler_gem_version  = '>= 4.0.0'

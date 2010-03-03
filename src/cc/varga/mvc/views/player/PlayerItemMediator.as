@@ -9,7 +9,7 @@ package cc.varga.mvc.views.player
 		[Inject]
 		public var view : PlayerItem;
 		
-		[Inejct]
+		[Inject]
 		public var soundService : ISoundService;
 		
 		public function PlayerItemMediator()

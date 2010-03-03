@@ -2,7 +2,6 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
     xmlns:s="library://ns.adobe.com/flex/spark" 
     xmlns:mx="library://ns.adobe.com/flex/halo" 
-    minWidth="1024" minHeight="768"
     creationComplete="creationCompleteHandler(event)" 
     applicationComplete="applicationCompleteHandler(event)"
     xmlns:mvc="cc.varga.mvc.*" 
@@ -10,8 +9,7 @@
     xmlns:views="cc.varga.mvc.views.*" 
     xmlns:player="cc.varga.mvc.views.player.*" 
     xmlns:result="cc.varga.mvc.views.result.*"
-    xmlns:navigation="cc.varga.mvc.views.navigation.*"
-    >
+    xmlns:navigation="cc.varga.mvc.views.navigation.*">
 
   <fx:Script>
     <![CDATA[

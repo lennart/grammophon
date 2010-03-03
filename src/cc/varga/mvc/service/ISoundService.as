@@ -5,5 +5,7 @@ package cc.varga.mvc.service
 	{
 		function play(uid : String, onComplete : Function, onError : Function) : void;
     function stop() : void;
+    function resume() : void;
+    function pause() : void;
 	}
 }
