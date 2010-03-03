@@ -12,7 +12,7 @@ var GRAMMOPHON = {
 
     /* First, set the client up with some callbacks. */
     Playdar.USE_STATUS_BAR = false;
-    Playdar.auth_details.receiverurl = Playdar.Util.location_from_url("/playdar_auth.html").href;
+    Playdar.auth_details.receiverurl = Playdar.Util.location_from_url("playdar_auth.html").href;
     Playdar.auth_details.type = "flash";
     Playdar.setupClient({
         onStat: function (detected) {
