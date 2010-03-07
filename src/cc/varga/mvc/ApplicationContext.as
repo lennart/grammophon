@@ -12,6 +12,8 @@ package cc.varga.mvc
 	import cc.varga.mvc.views.search.SearchSite;
 	import cc.varga.mvc.views.search.SearchSiteEvent;
 	import cc.varga.mvc.views.search.SearchSiteMediator;
+	import cc.varga.mvc.views.browser.Browser;
+	import cc.varga.mvc.views.browser.BrowserMediator;
 	import cc.varga.mvc.service.api.PlaydarService;
 	import cc.varga.mvc.service.ISearchService;
 	import cc.varga.mvc.service.ISoundService;
@@ -40,6 +42,7 @@ package cc.varga.mvc
 			mediatorMap.mapView(Navigator, NavigationMediator);
 			mediatorMap.mapView(Player, PlayerMediator);
 			mediatorMap.mapView(PlayerItem, PlayerItemMediator);
+			mediatorMap.mapView(Browser, BrowserMediator);
 			mediatorMap.mapView(Grammophon, ApplicationMediator);
       mediatorMap.createMediator(contextView);
 			
