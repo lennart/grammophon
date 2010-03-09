@@ -14,22 +14,18 @@
   <s:Rect width="100%" height="100%" radiusX="5" radiusY="5">
     <s:fill>
       <s:LinearGradient rotation="90">
-        <s:GradientEntry color="#ccccff" alpha="0.7"/>
-        <s:GradientEntry color="#333355" alpha="0.4"/>
+        <s:GradientEntry color="#80a0ff" alpha="0.7"/>
+        <s:GradientEntry color="#ffffff" alpha="0.4"/>
       </s:LinearGradient>
     </s:fill>
     <s:stroke>
-      <s:SolidColorStroke color="#9999aa" weight="5" alpha="0.3"/>
+      <s:SolidColorStroke color="#4070cc" weight="5" alpha="0.3"/>
     </s:stroke>
   </s:Rect>
 
-  <s:Group id="contentGroup">
+  <s:Group id="contentGroup" left="15" right="15" top="15" bottom="15">
     <s:layout>
-      <s:VerticalLayout
-          paddingTop="25"
-          paddingLeft="30"
-          paddingRight="30"
-        paddingBottom="25"/>
+      <s:VerticalLayout/>
     </s:layout>
   </s:Group>
 </s:SparkSkin>

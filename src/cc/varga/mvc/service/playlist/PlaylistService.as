@@ -21,14 +21,16 @@ package cc.varga.mvc.service.playlist
 		private var itemDict : Dictionary = new Dictionary();
 		private var currentPos : uint = 0;
     private var _current : Object;
-    private var _previous : Object;
-    private var _next : Object;
-		
 		public function PlaylistService()
 		{
 			super();
 		}
 		
+    public function get current() : Object {
+      return _current;
+    }
+
+
 		public function add(item : Object) : void
 		{
 			playlist.addItem(item);
@@ -40,24 +42,6 @@ package cc.varga.mvc.service.playlist
 			
 		}
 		
-/*		public function getItem(index : uint) : Object{
-			return playlist.getItemAt(index);
-		}
-	*/	
-		/*public function shufflePlaylist():void
-		{
-			
-		}
-		
-		public function repeatPlaylist():void
-		{
-			if(repeat){
-				repeat = false;
-			} else {
-				repeat = true;
-			}
-		}*/
-		
 		public function clear() : void
 		{
 			playlist = new ArrayCollection();
@@ -68,7 +52,8 @@ package cc.varga.mvc.service.playlist
       Logger.debug("Fetching previous Song\nCurrent Position: "+currentPos);
       if(currentPos > 1) {
         currentPos -= 1;
-        return playlist.getItemAt(currentPos);
+        _current = playlist.getItemAt(currentPos);
+        return current;
       }
       else {
         return null;
@@ -78,7 +63,8 @@ package cc.varga.mvc.service.playlist
 		public function get next() : Object{
       Logger.debug("Fetching next Song\nCurrent Position: "+currentPos);
       if(currentPos < playlist.length) {
-        return playlist.getItemAt(currentPos++);
+        _current = playlist.getItemAt(currentPos++);
+        return current; 
       }
       else {
         return null;
@@ -91,25 +77,7 @@ package cc.varga.mvc.service.playlist
 		}
 		
 
-    public function get current() : Object {
-      return playlist.getItemAt(currentPos);
-    }
 
-		import cc.varga.mvc.views.player.*;
-		private function checkFileType(jsonObj : Object):void{
-			
-//      var event : PlayerEvent = new PlayerEvent(PlayerEvent.PLAY_MP3);
-//      event.result = jsonObj.sid;
-//      dispatch(event);
-	//		if(jsonObj["video_id"]){
-	//			var event : PlayerEvent = new PlayerEvent(PlayerEvent.PLAY_YOUTUBE_VIDEO);
-	//			event.itemObj = jsonObj;
-	//			dispatch(event);
-	//		}
-			
-		}
-	
-		
 	}
 }
 

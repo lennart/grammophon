@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkSkin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:ai="http://ns.adobe.com/ai/2008" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
+ <fx:Script fb:purpose="styling">
+        /* Define the skin elements that should not be colorized. 
+           For toggle button, the graphics are colorized but the label is not. */
+        static private const exclusions:Array = ["labelDisplay"];
+
+        /**
+         * @private
+         */
+        override protected function initializationComplete():void
+        {
+            useChromeColor = true;
+            super.initializationComplete();
+        }
+        
+       /** 
+        * @private
+        */     
+        override public function get colorizeExclusions():Array {return exclusions;}
+    </fx:Script>
+  
+  <s:states>
+    <s:State name="up" />
+    <s:State name="over" stateGroups="overStates" />
+    <s:State name="down" stateGroups="downStates" />
+    <s:State name="disabled" stateGroups="disabledStates" />
+    <s:State name="upAndSelected" stateGroups="selectedStates, selectedUpStates" />
+    <s:State name="overAndSelected" stateGroups="overStates, selectedStates" />
+    <s:State name="downAndSelected" stateGroups="downStates, selectedStates" />
+    <s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
+  </s:states>
+  <fx:Metadata>[HostComponent("spark.components.ToggleButton")]</fx:Metadata>
+  <s:Rect top="5" right="5" left="5" bottom="5">
+    <s:fill>
+      <s:SolidColor color="0xa0c0ff" color.upAndSelected="#90a0ff" color.over="#e0e0ff"/>
+    </s:fill>
+    <s:stroke>
+      <s:SolidColorStroke color="0x0c0d0d"
+        caps="none"
+        weight="1"
+        joints="miter"
+        miterLimit="4"/>
+    </s:stroke>
+  </s:Rect>
+  <s:Rect x.disabled="1.5"
+    right.up="1"
+    y.disabled="1.5"
+    bottom.up="1"
+    width.disabled="100%" 
+    left.up="1"
+    height.disabled="100%" 
+    top.up="1"
+    right.over="1" 
+    left.over="1" 
+    top.over="1" 
+    bottom.over="1" 
+    right.down="1"
+    left.down="1" 
+    top.down="1"
+    bottom.down="1">
+    <s:stroke>
+      <s:SolidColorStroke color="0x262626" caps="none" weight="1" joints="miter" miterLimit="4"/>
+    </s:stroke>
+  </s:Rect>
+  <s:Label id="labelElement"
+    fontFamily="Myriad Pro"
+    fontSize="12"
+    lineHeight="120%"
+    color="#090909" 
+    whiteSpaceCollapse="preserve"
+    kerning="on" 
+    textAlign="center"
+    left="10"
+    right="10"
+    />
+</s:SparkSkin>
+

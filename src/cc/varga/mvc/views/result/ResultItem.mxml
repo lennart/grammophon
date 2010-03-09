@@ -53,7 +53,7 @@
   <s:Group top="10" bottom="10" right="10" left="10">
     <s:layout><s:VerticalLayout horizontalAlign="center"/></s:layout>
     <s:ButtonBar id="resultsChooser" change="choseResults(event)" requireSelection="true"/>  
-    <mx:DataGrid id="dg" itemClick="addToPlaylist(dg.selectedItem);">
+    <mx:DataGrid id="dg" itemClick="addToPlaylist(dg.selectedItem);" width.playdar="100%" height.playdar="100%">
       <mx:columns>
         <mx:DataGridColumn headerText="Artist" dataField="artist"/>
         <mx:DataGridColumn headerText="Track" dataField="track"/>

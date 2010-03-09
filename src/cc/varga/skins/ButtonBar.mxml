@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:ai="http://ns.adobe.com/ai/2008" xmlns:d="http://ns.adobe.com/fxg/2008/dt">
+  <s:states>
+    <s:State name="normal"/>
+    <s:State name="disabled"/>
+  </s:states>
+  <fx:Metadata>[HostComponent("spark.components.ButtonBar")]</fx:Metadata>
+  <fx:Declarations>
+    <fx:Component id="firstButton" >
+      <s:ButtonBarButton skinClass="cc.varga.skins.ToggleButton" >
+      </s:ButtonBarButton>
+    </fx:Component>
+    <fx:Component id="middleButton" >
+      <s:ButtonBarButton skinClass="cc.varga.skins.ToggleButton" >
+        <s:filters>
+          <s:GlowFilter color="0xFFFF66" strength="5" />
+        </s:filters>
+      </s:ButtonBarButton>
+    </fx:Component>
+    <fx:Component id="lastButton" >
+      <s:ButtonBarButton skinClass="cc.varga.skins.ToggleButton" >
+      </s:ButtonBarButton>
+    </fx:Component>
+  </fx:Declarations>
+
+  <!--  <s:Rect top="5" right="5" left="5" bottom="5">
+    <s:fill>
+      <s:SolidColor color="0xa0c0ff" />
+    </s:fill>
+    <s:stroke>
+      <s:SolidColorStroke color="0x0c0d0d"
+        caps="none"
+        weight="1"
+        joints="miter"
+        miterLimit="4"/>
+    </s:stroke>
+  </s:Rect>-->
+  <s:DataGroup id="dataGroup" width="100%" height="100%">
+  </s:DataGroup>
+</s:Skin>
+
+

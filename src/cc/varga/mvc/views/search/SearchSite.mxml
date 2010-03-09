@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
      xmlns:mx="library://ns.adobe.com/flex/halo"
-     xmlns:mcintosh="com.andymcintosh.controls.*">
+     xmlns:mcintosh="com.andymcintosh.controls.*" width.search="100%">
 
 	<fx:Script>
 		<![CDATA[
@@ -55,34 +55,46 @@
     <s:State name="search"/>
     <s:State name="blipfm"/>
   </s:states>
-  <s:layout><s:VerticalLayout/></s:layout>
+  <s:layout>
+    <s:VerticalLayout horizontalAlign="center"/>
+  </s:layout>
   <s:ButtonBar id="modeBar" requireSelection="true" change="toggleState(event)" width="100%">
     <s:dataProvider>
       <s:ArrayList source="{this.states.map(function(x:*, idx:int, arr:Array) : String { return x.name; })}"/>
     </s:dataProvider>
   </s:ButtonBar>
-  <s:Group width="60%" height="80" id="container">
+  <s:Group id="container" width="100%">
     <s:layout><s:HorizontalLayout/></s:layout>
     <mcintosh:AdvancedTextInput id="artist" 
         skinClass="com.andymcintosh.skins.AdvancedTextInputSkin"
         fontSize="24"
-        width="250"
         promptText="Artist"
+        width="35%"
         enter="searchHandler(event)"
         textAlign="center" 
+        height="35"
         includeIn="search" />
     <mcintosh:AdvancedTextInput id="title"
         skinClass="com.andymcintosh.skins.AdvancedTextInputSkin" 
         enter="searchHandler(event)"
-        promptText="Title" fontSize="24" width="250" textAlign="center" includeIn="search" />
+        promptText="Title" 
+        fontSize="24"
+        textAlign="center"
+        width="35%"
+        height="35"
+        includeIn="search" />
     <mcintosh:AdvancedTextInput id="nickname"  
         skinClass="com.andymcintosh.skins.AdvancedTextInputSkin" 
         enter="blipHandler(event)"
-        promptText="Nickname" fontSize="24" width="250" textAlign="center" includeIn="blipfm" />
+        height="35"
+        promptText="Nickname" fontSize="24" width="70%" textAlign="center" includeIn="blipfm" />
     <s:Button label.search="Search" label.blipfm="Get Blips"
-        fontSize.search="24"
+        fontSize="24"
         click.blipfm="blipHandler(event)"
-        click.search="searchHandler(event)" width="150" />
+        click.search="searchHandler(event)" 
+        width="30%" 
+        height="35"
+        cornerRadius="5"/>
   </s:Group>
 
 </s:Group>

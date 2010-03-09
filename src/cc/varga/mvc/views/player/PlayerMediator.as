@@ -77,6 +77,7 @@ package cc.varga.mvc.views.player
 		
 		private function onPlayPlaylist(event : PlayerEvent):void{
       disorder.enable();
+      view.currently_playing.text = playlist.current.track;
 		}
 		
 		private function onPlayMP3(event:PlayerEvent) : void {

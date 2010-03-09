@@ -13,7 +13,18 @@
     xmlns:navigation="cc.varga.mvc.views.navigation.*">
   <fx:Library>
   </fx:Library>
+  <fx:Style>
+      @namespace local "*";
+      @namespace mx "library://ns.adobe.com/flex/halo";
+      @namespace s "library://ns.adobe.com/flex/spark";
 
+      s|Button {
+      skinClass: ClassReference('cc.varga.skins.ButtonSkin');
+      }
+      s|ButtonBar {
+      skinClass: ClassReference('cc.varga.skins.ButtonBar');
+      }
+  </fx:Style>
   <fx:Script>
     <![CDATA[
       import mx.core.Application;
@@ -56,10 +67,10 @@
     <s:State name="browserState" />
   </s:states>
   <s:layout>
-    <s:VerticalLayout horizontalAlign="center" />
+    <s:BasicLayout/>
   </s:layout>
 
-  <navigation:Navigator left="10" right="10" height="100"
+  <navigation:Navigator left="0" right="0" height="100"
     skinClass="cc.varga.mvc.views.navigation.NavigationSkin" 
     id="navigator"
     label.searchState="Search" 
@@ -67,17 +78,17 @@
     label.resultState="Results"
     label.playerState="Playback"/>
 
-  <s:Button label="FS" click="fullscreen(event)"/>
   <s:SkinnableContainer 
-    left="50" 
-    top="25" 
-    right="50" 
-    bottom="50"
-    skinClass.searchState="cc.varga.mvc.views.search.SearchSkin">
-
-    <s:layout><s:VerticalLayout/></s:layout>
+    skinClass.searchState="cc.varga.mvc.views.search.SearchSkin" left="50" right="50" height.searchState="100" top.playerState="110" top.browserState="110" top.resultState="110" left.searchState="50" bottom.playerState="50" bottom.browserState="50" bottom.resultState="50" right.searchState="50" verticalCenter.searchState="30">
+	<s:layout>
+      <s:BasicLayout/>
+    </s:layout>
     <search:SearchSite width="100%" id="search" includeIn="searchState"/>
-    <result:ResultItem width="100%" height="100%" id="results" includeIn="resultState"/>
+    <result:ResultItem width="100%" height="100%" id="results" includeIn="resultState">
+      <result:layout>
+        <s:BasicLayout/>
+      </result:layout>
+    </result:ResultItem>
     <browser:Browser id="browser" includeIn="browserState"/>
     <player:Player id="player" includeIn="playerState" />
   </s:SkinnableContainer>
