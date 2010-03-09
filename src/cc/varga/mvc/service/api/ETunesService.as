@@ -41,7 +41,7 @@ package cc.varga.mvc.service.api {
       callback(new ArrayCollection(data["rows"] as Array));
     }
 
-    protected function onIOError(e : IOErrorEvent) : void {
+    protected function onIOError(e : Error) : void {
       logger.error("Failed to load data");
     }
 

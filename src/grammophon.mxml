@@ -19,11 +19,12 @@
       @namespace s "library://ns.adobe.com/flex/spark";
 
       s|Button {
-      skinClass: ClassReference('cc.varga.skins.ButtonSkin');
+        skinClass: ClassReference('cc.varga.skins.ButtonSkin');
       }
       s|ButtonBar {
-      skinClass: ClassReference('cc.varga.skins.ButtonBar');
+        skinClass: ClassReference('cc.varga.skins.ButtonBar');
       }
+
   </fx:Style>
   <fx:Script>
     <![CDATA[
@@ -79,7 +80,7 @@
     label.playerState="Playback"/>
 
   <s:SkinnableContainer 
-    skinClass.searchState="cc.varga.mvc.views.search.SearchSkin" left="50" right="50" height.searchState="100" top.playerState="110" top.browserState="110" top.resultState="110" left.searchState="50" bottom.playerState="50" bottom.browserState="50" bottom.resultState="50" right.searchState="50" verticalCenter.searchState="30">
+    skinClass.searchState="cc.varga.mvc.views.search.SearchSkin" height.searchState="100" top="110" left="5" bottom="10" bottom.searchState="auto" left.searchState="50" right.searchState="50" right="5" verticalCenter.searchState="0">
 	<s:layout>
       <s:BasicLayout/>
     </s:layout>
