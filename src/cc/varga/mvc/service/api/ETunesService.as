@@ -5,6 +5,7 @@
 package cc.varga.mvc.service.api {
 	import cc.varga.mvc.service.ISearchService;
 	import cc.varga.mvc.service.ISoundService;
+  import com.adobe.serialization.json.JSON;
 	import cc.varga.utils.logger.ILogger;
 	import cc.varga.utils.logger.Logger;
   import org.playdar.Playdar;
@@ -24,6 +25,8 @@ package cc.varga.mvc.service.api {
     private var _currentlyPlaying : String;
     private var _onComplete : Function;
     private var _onError : Function;
+    private const _rootURL : String = "http://localhost:5984/etunes/_design/etunes-app/_view/";
+
     public function ETunesService() {
 //      playdar = new Playdar();
       super();
@@ -33,12 +36,32 @@ package cc.varga.mvc.service.api {
       var query : URLVariables = new URLVariables();
       query.reduce = true;
       query.group_level = 1;
-      getData("http://localhost:5984/etunes/_design/etunes-app/_view/artist", function(data : Object) { onArtistsComplete(onComplete,data); }, onIOError, query);
+      getData(_rootURL+"artist", function(data : Object) { onArtistsComplete(onComplete,data); }, onIOError, query);
     }
 
-    protected function onArtistsComplete(callback : Function ,data : Object) : void {
+    public function tracks(filter : Object, onComplete : Function) : void {
+      var query : URLVariables = new URLVariables();
+      if(filter.artist != null) {
+        query.key = JSON.encode(filter.artist);
+        query.include_docs = true;
+        query.reduce = false;
+        getData(_rootURL+"artist", function(data : Object) { 
+          onTracksComplete(onComplete, data); 
+            }, onIOError, query);
+      }
+      else {
+        logger.error("There is nothing inside the filter I can work with");
+      }
+    }
+    
+    protected function onTracksComplete(callback : Function, data : Object) : void {
+      logger.debug("Got Tracks");
+      callback(new ArrayCollection( (data["rows"] as Array).map(filterDocs) ));
+    }
+
+    protected function onArtistsComplete(callback : Function, data : Object) : void {
       logger.debug("Got Response");
-      callback(new ArrayCollection(data["rows"] as Array));
+      callback(new ArrayCollection((data["rows"] as Array).map(wrapAsArtist(filterKeys))));
     }
 
     protected function onIOError(e : Error) : void {
@@ -67,7 +90,7 @@ package cc.varga.mvc.service.api {
           function(e:Event):void{
           var loader:URLLoader = e.target as URLLoader;
           try{
-          var parsed:Object = Yajl.decode(loader.data);
+          var parsed:Object = JSON.decode(loader.data);
           }
           catch(e:Error){
           if(onError != null){
@@ -79,46 +102,18 @@ package cc.varga.mvc.service.api {
           );
       loader.load(request);
     }
-    //   public function resolve(artist : String,track : String, onSuccess : Function, onError : Function) : void {
-    //      playdar.resolve(artist, track, onSuccess, onError);
-    //    }
-    //
-    //    public function play(uid : String, onComplete : Function, onError : Function) : void {
-    //      _onComplete = onComplete;
-    //      _onError = onError;
-    //      playdar.play(uid, onSongComplete, onError);
-    //      _currentlyPlaying = uid;
-    //    }
-    //
-    //    public function resume() : void {
-    //      Logger.debug("Resume called for: "+_currentlyPlaying);
-    //      playdar.resume(_currentlyPlaying);
-    //    }
-    //
-    //    public function stop() : void {
-    //      Logger.debug("Stop called for: "+_currentlyPlaying);
-    //      playdar.stop(_currentlyPlaying);
-    //    }
-    //    
-    //    public function pause() : void {
-    //      Logger.debug("Pause called for: "+_currentlyPlaying);
-    //      playdar.pause(_currentlyPlaying);
-    //    }
-    //
-    //    private function onSongComplete(event : Event) : void {
-    //      playdar.stop(_currentlyPlaying);
-    //      if (_onComplete != null) {
-    //        _onComplete();
-    //      }
-    //    }
-    //
-    //    private function onError(event : Event) : void {
-    //      Logger.log("Something failed: "+event.toString(),"ETunesService");
-    //      if (_onError != null) {
-    //        _onError();
-    //      }
-    //    }
 
+    private function filterDocs(item : *, index : int, array : Array) : Object {
+      return item["doc"];
+    }
+
+    private function wrapAsArtist(filterFunction : Function) : Function {
+      return function(item : *, index : int, array : Array) { return {"artist" : filterFunction(item,index,array)}; };
+    }
+
+    private function filterKeys(item : *, index : int, array : Array) : Object {
+      return item["key"];
+    }
   }
 
 }

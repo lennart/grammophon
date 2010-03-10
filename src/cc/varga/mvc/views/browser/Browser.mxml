@@ -10,12 +10,21 @@
   <fx:Script>
     <![CDATA[
       import spark.events.IndexChangeEvent;	
+      import cc.varga.mvc.views.browser.BrowserEvent;
 
     protected function choseCategory(e : IndexChangeEvent) : void {
-
     }
 
     protected function categorySelect(item : Object) : void {
+      if(this.currentState == "artist") {
+        trace("Selected Artist");
+        var browserEvent : BrowserEvent = new BrowserEvent(BrowserEvent.ARTIST_SELECTED);
+        browserEvent.content = item;
+        dispatchEvent(browserEvent);
+      }
+      else {
+        trace("Album??");
+      }
     }
 
     protected function addToPlaylist(item : Object) : void {

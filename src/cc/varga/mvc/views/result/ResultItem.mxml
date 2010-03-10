@@ -37,10 +37,12 @@
 
 
       protected function choseResults(event : IndexChangeEvent) : void {
-      trace("Switching Result Set");
-      var itemEvent : ResultItemEvent = new ResultItemEvent(ResultItemEvent.SWITCH_TO_RESULTS);
-      itemEvent.label = ButtonBar(event.target).selectedItem;
-      dispatchEvent(itemEvent);
+        var itemEvent : ResultItemEvent = new ResultItemEvent(ResultItemEvent.SWITCH_TO_RESULTS);
+        var item : Object = ButtonBar(event.target).selectedItem;
+        if(item != null) {
+          itemEvent.uid = item.uid;
+          dispatchEvent(itemEvent);
+        }
       }
     ]]>
   </fx:Script>

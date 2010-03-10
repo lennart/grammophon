@@ -18,6 +18,8 @@ package cc.varga.mvc.views.player
     [Inject]
     public var playlist : IPlaylistService;
 
+    [Bindable]
+    public var currentTrack : String;
 		
 		[Inject]
 		public var view : Player;
@@ -37,6 +39,7 @@ package cc.varga.mvc.views.player
 
 			
       disorder.beforeNext = onSongComplete;
+      view.currently_playing.text = currentTrack;
 			drawPlaylist();	
 			
 		}
@@ -50,12 +53,14 @@ package cc.varga.mvc.views.player
       disorder.disable(true);
       feedPlayer(playlist.next);
       disorder.enable();
+      bindCurrentTrack();
 		}
 
     private function onPrev(event:PlayerEvent) :void {
       disorder.disable(true);
       feedPlayer(playlist.prev);
       disorder.enable();
+      bindCurrentTrack();
     }
 
 		private function onSongComplete(): void{
@@ -77,8 +82,14 @@ package cc.varga.mvc.views.player
 		
 		private function onPlayPlaylist(event : PlayerEvent):void{
       disorder.enable();
-      view.currently_playing.text = playlist.current.track;
+      bindCurrentTrack();
 		}
+    
+    private function bindCurrentTrack() : void {
+      if ((currentTrack == null) && (playlist.current != null)) {
+        currentTrack = playlist.current.track;
+      }
+    }
 		
 		private function onPlayMP3(event:PlayerEvent) : void {
 		}

@@ -14,7 +14,7 @@ package cc.varga.mvc.views.search
 		
 		public var search_query : Object;
 		public var result : *;
-    public var resultSetLabel : String;
+    public var resultSetUID : String;
 		
 		public function SearchSiteEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{

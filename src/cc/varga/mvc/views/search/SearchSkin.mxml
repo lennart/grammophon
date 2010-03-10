@@ -11,16 +11,18 @@
   </fx:Metadata>
   <fx:Declarations>
   </fx:Declarations>
-  <s:Rect width="100%" height="100%" radiusX="5" radiusY="5">
+  <s:Rect width="100%" height="100%" radiusX="2" radiusY="2">
+    <s:stroke>
+      <s:SolidColorStroke color="#4070cc" alpha="0.3"/>
+    </s:stroke>
+  </s:Rect>
+  <s:Rect right="5" left="5" top="5" bottom="5">
     <s:fill>
       <s:LinearGradient rotation="90">
         <s:GradientEntry color="#80a0ff" alpha="0.7"/>
         <s:GradientEntry color="#ffffff" alpha="0.4"/>
       </s:LinearGradient>
     </s:fill>
-    <s:stroke>
-      <s:SolidColorStroke color="#4070cc" weight="5" alpha="0.3"/>
-    </s:stroke>
   </s:Rect>
 
   <s:Group id="contentGroup" left="15" right="15" top="15" bottom="15">

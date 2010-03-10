@@ -11,8 +11,9 @@ package cc.varga.mvc.views.search
   import cc.lmaa.yajl.Yajl;
   import flash.ui.Keyboard;
 
-  import mx.collections.ArrayCollection;
 
+  import mx.collections.ArrayCollection;
+  import mx.utils.UIDUtil;
   import mx.controls.Alert;
 
   import org.robotlegs.mvcs.Mediator;
@@ -43,51 +44,69 @@ package cc.varga.mvc.views.search
     }
 
     private function onFetchBlips(event : SearchSiteEvent) : void {
-      var nickname : String = event.search_query.nickname;
+      var label : String = labelForContainer(event.search_query);
       var loader : URLLoader = new URLLoader();
       loader.addEventListener(Event.COMPLETE, function(response:Event) : void {
-        onBlipsFetched(nickname, response); 
+        onBlipsFetched(label, response); 
       });
       loader.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
-      loader.load(new URLRequest("http://api.blip.fm/blip/getUserProfile.json?username="+nickname));
+      loader.load(new URLRequest("http://api.blip.fm/blip/getUserProfile.json?username="+event.search_query.nickname));
     }
 
     private function onBlipsFetched(label : String, event : Event) : void {
+      var uid : String = UIDUtil.createUID();
       var json : Array  = Yajl.decode(event.currentTarget.data).result.collection.Blip as Array;
-      resultContainer[label] = appData.createNewResultContainer(label, json.length);
       var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
-      searchEvent.resultSetLabel = label;
+
+      resultContainer[uid] = appData.createNewResultContainer(uid, label, json.length);
+      searchEvent.resultSetUID = uid;
       dispatch(searchEvent);
+
       for(var i : uint; i < json.length; i++) {
-        playdar.resolve(json[i].artist, json[i].title, function(response:Object) {
-          onSearchResults(label, response, false); 
-        }, onError);
+        resolveQuery(json[i], uid, false);
       }
     }
 
     private function onSearchClicked(event : SearchSiteEvent):void {
-      // Setting both artist and track to search_query
-      var artist:String = event.search_query.artist;
-      var track:String = event.search_query.title;
-      var label : String = artist+" "+track;
-      playdar.resolve(artist, track, function(response:Object) : void { 
-        onSearchResults(label, response); 
-        }, onError); 
+      var label : String = labelForContainer(event.search_query);
+      var uid : String = UIDUtil.createUID();
+      var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
 
       Logger.log("Fetching Search Results",this.toString());
-      resultContainer[label] = appData.createNewResultContainer(label);
-      var searchEvent : SearchSiteEvent = new SearchSiteEvent(SearchSiteEvent.DRAW_RESULT);
-      searchEvent.resultSetLabel = label;
+      resolveQuery(event.search_query, uid);
+      resultContainer[uid] = appData.createNewResultContainer(uid, label);
+      searchEvent.resultSetUID = uid;
+
       dispatch(searchEvent);
     }
 
-    private function onSearchResults(label : String, response:Object, addAll : Boolean = true) : void {
+    private function labelForContainer(queryObject : Object) : String {
+      var labelComponents : Array = [];
+      if(queryObject.nickname != null) {
+        labelComponents.push(queryObject.nickname);
+      }
+      if(queryObject.artist != null) {
+        labelComponents.push(queryObject.artist);
+      }
+      if(queryObject.track != null) {
+        labelComponents.push(queryObject.track);
+      }
+      return labelComponents.join(" - ");
+    }
+
+    private function resolveQuery(queryObject : Object, uid : String, addAll : Boolean = true) : void {
+      playdar.resolve(queryObject.artist, queryObject.track, function(response:Object) : void { 
+        onSearchResults(uid, response, addAll); 
+        }, onError); 
+    }
+
+    private function onSearchResults(uid : String, response:Object, addAll : Boolean = true) : void {
       Logger.log("Search Results coming in: "+response.results.length,this.toString());
       if(addAll) {
-        resultContainer[label].addAll(new ArrayCollection(response.results));
+        resultContainer[uid].addAll(new ArrayCollection(response.results));
       }
       else {
-        resultContainer[label].addItem(response.results[0]);
+        resultContainer[uid].addItem(response.results[0]);
       }
     }
 

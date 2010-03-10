@@ -24,6 +24,12 @@ package cc.varga.mvc.views.result
 
     [Inject]
     public var appData : ApplicationData;
+
+    [Bindable]
+    public var currentResultSet : Object;
+
+    [Bindable]
+    public var state : String;
 		
 		public function ResultItemMediator() { super(); }
 		
@@ -33,48 +39,51 @@ package cc.varga.mvc.views.result
 			eventMap.mapListener(view, ResultItemEvent.PLAY_ITEM, onPlay);
 			eventMap.mapListener(view, ResultItemEvent.SWITCH_TO_RESULTS, onSwitchToResults);
 			eventMap.mapListener(eventDispatcher, ResultItemEvent.SWITCH_TO_RESULTS, onSwitchToResults);
-      eventMap.mapListener(eventDispatcher, ResultItemEvent.DRAW_RESULTS, drawResults);
-      view.resultsChooser.dataProvider = new ArrayCollection((appData.results.source as Array).map(function(e:*,i:int,a:Array):String { return e.label }));
+      //eventMap.mapListener(eventDispatcher, ResultItemEvent.DRAW_RESULTS, drawResults);
+      if (currentResultSet == null) {
+        currentResultSet = appData.latestResultSet;
+      }
+      setDataGridProvider();
+      view.resultsChooser.dataProvider = appData.resultsArrayList;
 		}
 
-    private function drawResults(event : ResultItemEvent) : void {
+/*    private function drawResults(event : ResultItemEvent) : void {
       Logger.log("Drawing Results","Result Mediator");
       view.dg.dataProvider = event.result;
+    }*/
+
+    private function setDataGridProvider() : void {
+      if(currentResultSet != null) {
+        view.dg.dataProvider = currentResultSet.content;
+      }
     }
 	
     private function onSwitchToResults(event : ResultItemEvent) : void {
       Logger.debug("Switching to Results");
-      var label: String = event.label;
-      var matches : Array = appData.results.source.filter(function(e:*, i:int, a:Array): Boolean { return e.label == label });
-      if(matches.length > 0) {
-        var currentResultSet : Object = matches[0];
-        view.dg.dataProvider = currentResultSet.content;
-        if(currentResultSet.maxSize != 0) {
-          view.maxSize.text = currentResultSet.maxSize;
-        }
-        else {
-          view.maxSize.text = "";
-        }
+      currentResultSet = appData[event.uid];
+      setDataGridProvider();
+      if(currentResultSet.maxSize != 0) {
+        view.maxSize.text = currentResultSet.maxSize;
       }
       else {
-        Logger.log("This should not happen, can't switch to results: "+label,"Results Mediator");
+        view.maxSize.text = "";
       }
     }
 
-		private function onPlay(event : ResultItemEvent):void{
+    private function onPlay(event : ResultItemEvent):void{
       /* Currently this does nothing, however, it might one day be able to fade out current
-      * playlist, backup it, fade in song (possible in the middle), restore current playlist and 
-      * continue on pause of this result
-      */
-			//stateService.switchToStage(ApplicationStateList.PLAYER_STATE);
-			//var playerEvent : PlayerEvent = new PlayerEvent(PlayerEvent.PLAY_YOUTUBE_VIDEO);
-			//playerEvent.result = event.result;
-			//dispatch(playerEvent);
-		}
-		
-		private function onAddToPlaylist(event : PlaylistEvent):void{
-			dispatch(event);			
-		}
-		
-	}
+       * playlist, backup it, fade in song (possible in the middle), restore current playlist and 
+       * continue on pause of this result
+       */
+      //stateService.switchToStage(ApplicationStateList.PLAYER_STATE);
+      //var playerEvent : PlayerEvent = new PlayerEvent(PlayerEvent.PLAY_YOUTUBE_VIDEO);
+      //playerEvent.result = event.result;
+      //dispatch(playerEvent);
+    }
+
+    private function onAddToPlaylist(event : PlaylistEvent):void{
+      dispatch(event);			
+    }
+
+  }
 }

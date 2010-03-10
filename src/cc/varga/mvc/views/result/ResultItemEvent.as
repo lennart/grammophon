@@ -11,7 +11,7 @@ package cc.varga.mvc.views.result
 		public static const SWITCH_TO_RESULTS : String = "switch_to_results";
 		
 		public var result : *;
-    public var label : String;
+    public var uid : String;
 		
 		public function ResultItemEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{

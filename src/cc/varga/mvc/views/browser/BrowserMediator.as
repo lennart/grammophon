@@ -3,6 +3,7 @@ package cc.varga.mvc.views.browser
 	import cc.varga.mvc.*;
 	import cc.varga.mvc.service.StateChangerService;
 	import cc.varga.mvc.service.playlist.PlaylistEvent;
+	import cc.varga.mvc.views.browser.BrowserEvent;
 	import cc.varga.mvc.service.*;
 	import cc.varga.mvc.service.api.ETunesService;
 	import cc.varga.mvc.views.player.*;
@@ -34,8 +35,8 @@ package cc.varga.mvc.views.browser
 		override public function onRegister() : void{
       Logger.log("Registered","Browser Mediator");
 
-      eTunes.artists(setContent);
-//			eventMap.mapListener(view, PlaylistEvent.PLAYLIST_ADD, onAddToPlaylist);   
+      eTunes.artists(setCategoryContent);
+			eventMap.mapListener(view, BrowserEvent.ARTIST_SELECTED, loadTracksByArtist);   
 //			eventMap.mapListener(view, ResultItemEvent.PLAY_ITEM, onPlay);
 //			eventMap.mapListener(view, ResultItemEvent.SWITCH_TO_RESULTS, onSwitchToResults);
 //			eventMap.mapListener(eventDispatcher, ResultItemEvent.SWITCH_TO_RESULTS, onSwitchToResults);
@@ -43,8 +44,17 @@ package cc.varga.mvc.views.browser
 //      view.resultsChooser.dataProvider = new ArrayCollection((appData.results.source as Array).map(function(e:*,i:int,a:Array):String { return e.label }));
 		}
 
-    private function setContent(artists : ArrayCollection) : void {
+    private function setCategoryContent(artists : ArrayCollection) : void {
       view.category.dataProvider = artists;
+    }
+
+    private function setTracksContent(tracks : ArrayCollection) : void {
+      view.tracks.dataProvider = tracks;
+    }
+
+    private function loadTracksByArtist(e : BrowserEvent) : void {
+      Logger.debug("Loading Tracks");
+      eTunes.tracks(e.content, setTracksContent);
     }
 
   //  private function drawResults(event : ResultItemEvent) : void {
